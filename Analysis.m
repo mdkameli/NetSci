@@ -24,10 +24,13 @@ spy(Au);
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Distribution
-N = size(A,1);              % Number of Nodes
+N = size(A,1); % Number of Nodes
+ display("Number of Nodes= "+N)
 d = full(sum(A));           % Degree Vector
 %d = d(d>0);                 % avoid zero degrees
-Links_num = sum(d);         % Total number of links
+Links_num = sum(d);         % Total number of links --G (Let's decide if #node is this or we want to divide by 2)
+ display("Total number of links= "+Links_num)
+
 k = unique(d);              % Degree Samples
 pk = histc(d,k)';           % counts occurrences
 pk = pk/sum(pk);            % normalize to 1
@@ -42,9 +45,19 @@ pklog = pklog/sum(pklog);   % normalize to 1
 
 %% %%%%%%%%%%%%%%%%% MOMENTS OF DEGREE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%
 
-Mean_K = mean(k);           % First Moment of prob. distribution
-Var_K = var(k);             % Second Moment of Prob. distribution (Express the spread)
-Skew_K = skewness(k);       % Third Moment of Prob. distribution (How symmetric around average)
+Mean_D = mean(d);           % First Moment of prob. distribution
+                           % -- G before was Mean_K = mean(k), but actually k is
+                           % -- G the vestor of unique values, we should
+                           % -- G use d; the same for all other mesures
+display("First Moment of prob. distribution= "+Mean_D)
+
+
+Var_D = var(d);             % Second Moment of Prob. distribution (Express the spread)
+
+display("Second Moment of Prob. distribution= "+Var_D)
+
+Skew_D = skewness(d);       % Third Moment of Prob. distribution (How symmetric around average)
+display("Third Moment of Prob. distribution= "+Skew_D)
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -137,7 +150,7 @@ s1 = k.^(1-ga); % build the CCDF signal
 loglog(k,s1/s1(10)*Pk(10));
 % ML fitting with saturation
 s1 = ((k+ks)/(kmin+ks)).^(1-ga2(ks));
-loglog(k,s1)
+loglog(k,s1*exp(-1.2))
 hold off
 axis([xlim min(Pk/2) 2])
 grid
@@ -146,3 +159,32 @@ ylabel('CCDF')
 title('ML fittings')
 legend('data','ML','ML with sat.')
 
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY
+
+k_tmp = (A*d')./d'; % averages degree of neighbours
+
+
+% extract averages for each value of k
+u = unique(d');
+for k = 1:length(u)
+    k_nn(k) = mean(k_tmp(d'==u(k))); 
+end
+
+% do the linear fitting
+p = polyfit(log(u'),log(k_nn),1);
+disp(['Assortativity factor ' num2str(p(1))]) %assortativity factor
+
+
+%% %%%%%%%%%%%%%%%%% SHOW RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
+
+figure(1)
+loglog(d,k_tmp,'g.');
+hold on
+loglog(u,exp(p(2)+log(u)*p(1)),'r-');
+loglog(u,k_nn,'k.');
+hold off
+grid
+xlabel('k')
+ylabel('k_{nn}')
+title('Assortativity of the Collaboration Network')
