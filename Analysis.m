@@ -8,7 +8,7 @@ N = max(size(G));
 A = sparse(G);
 clear G;
 figure(1)
-%spy(A)
+spy(A)
 
 %% pre-processing
 
