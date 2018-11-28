@@ -24,10 +24,10 @@ spy(Au);
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Distribution
-N = size(A,1); % Number of Nodes
+N = size(A,1);              % Number of Nodes
  display("Number of Nodes= "+N)
 d = full(sum(A));           % Degree Vector
-%d = d(d>0);                 % avoid zero degrees
+%d = d(d>0);                % avoid zero degrees
 Links_num = sum(d);         % Total number of links --G (Let's decide if #node is this or we want to divide by 2)
  display("Total number of links= "+Links_num)
 
@@ -47,7 +47,7 @@ pklog = pklog/sum(pklog);   % normalize to 1
 
 Mean_D = mean(d);           % First Moment of prob. distribution
                            % -- G before was Mean_K = mean(k), but actually k is
-                           % -- G the vestor of unique values, we should
+                           % -- G the vector of unique values, we should
                            % -- G use d; the same for all other mesures
 display("First Moment of prob. distribution= "+Mean_D)
 
@@ -160,10 +160,9 @@ title('ML fittings')
 legend('data','ML','ML with sat.')
 
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY
+%% %%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY %%%%%%%%%%%%%%%%%%%%%%%%%
 
-k_tmp = (A*d')./d'; % averages degree of neighbours
-
+k_tmp = (A*d')./d'; % the average degree of neighbours
 
 % extract averages for each value of k
 u = unique(d');
@@ -188,3 +187,94 @@ grid
 xlabel('k')
 ylabel('k_{nn}')
 title('Assortativity of the Collaboration Network')
+
+
+%% %%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 1 %%%%%%%%%%%%%%%%%%%%%%
+%Clustring Coefficient: Measure density of links in the neighbourhood
+
+cn = diag(full((Au*triu(Au)*Au)));          % Number of triangles for each node
+Ei = zeros(size(d));
+Ei = cn(d>1).';                             % Number of edges between nodes of neighbourhood
+%E_Max = 0.5*d(d>1).*(d(d>1)-1);             % Maximum Number of Edges (Pairs)
+C1 = 2*Ei./d(d>1)./(d(d>1)-1);                              % Clustring Coefficient
+%C1 = C1(C1>0);
+Cave1 = sum(C1)/N;
+
+%% %%%%%%%%%%%%%% CLUSTRING COEFFICIENT 2 %%%%%%%%%%%%%%%%%%%%%%
+for i=1:length(Au)
+  str(i).child = find(Au(i,:)>0);
+end
+N = length(Au);
+deg = sum(Au(:,:));
+
+% find neighboring links
+
+for i=1:N
+    adjn = Au(str(i).child,str(i).child);
+    E(i) = sum(sum(adjn))/2;
+    if deg(i)==1 | deg(i)==0
+        C(i) = 0;
+    else
+        C(i) = 2*E(i)/deg(i)/(deg(i)-1);
+    end
+
+end
+%C = C(C>0);
+C = full(C);
+Cave2 = sum(C)/N;
+ display("Average Clustering Coefficient = "+Cave2)
+
+%% CLUSTRING COEFFICIENT PROB. DISTRIBUTION
+s = unique(C);                              % Unique Occurrences
+Cpk = histc(C,s)';                          % counts occurrences
+Cpk = Cpk/sum(Cpk);                         % normalize to 1
+
+% Cumulative distribution
+CPk = cumsum(Cpk,'reverse');
+figure(5);
+plot(s,CPk,'+');
+grid
+hold on
+hline = refline([0 Cave1]);
+hline.Color = 'r';
+hline.LineWidth = 1;
+hline.DisplayName = 'Average Clustering Coefficient';
+hold off
+xlabel('k')
+ylabel('PDF')
+title('Clustring Coefficient Distribution')
+%% %%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%
+%Robustness: if you knock out x% of nodes/edges, how many % survive ?
+
+% Inhomogeneity Ratio: 
+%First we should check the availability of Giant Component that Molly-Reed
+%Criterian holds
+
+% find the largest connected component
+e1 = [1;zeros(N-1,1)];
+exit = false;
+while(~exit)
+    e1_old = e1;
+    e1 = 1*(A*e1+e1>0);
+    exit = (sum(e1-e1_old)==0);
+end
+pos = find(e1);
+GC = A(pos,pos);
+N_GC = size(GC,1);
+
+% Random Network
+Rand_inhom_Ratio = Var_D / Mean_D;                    %A randomly wired network has a giant component
+if Rand_inhom_Ratio > 2                               %if the inhomogeneity ratio K = ?k2? / ?k? satisfies
+    disp('For the Random Network There is a Gianet Component')   % K > 2
+end
+
+% Scale free Network (ga>3)
+gama = max(ga2);
+if gama > 3
+    ScFree_inhom_Ratio = kmin.*(gama-2)./(gama-3);
+elseif (2<gama) && (gama<3)
+        ScFree_inhom_Ratio = kmin.*(gama-2)./(3-gama).*N^((3-gama)./(gama-1));
+elseif (1<gama) && (gama<2)
+        ScFree_inhom_Ratio = kmin.*(2-gama)./(3-gama).*N^(1./(gama-1));
+end
+display('For the Scale free Network The Inhomogeneity Ratio is = '+ScFree_inhom_Ratio);
