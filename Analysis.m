@@ -147,7 +147,7 @@ loglog(k,Pk,'.')
 hold on
 % ML fitting (we make sure that the plot follows the data)
 s1 = k.^(1-ga); % build the CCDF signal
-loglog(k,s1/s1(10)*Pk(10));
+loglog(k,s1/s1(40)*Pk(40));
 % ML fitting with saturation
 s1 = ((k+ks)/(kmin+ks)).^(1-ga2(ks));
 loglog(k,s1*exp(-1.2))
@@ -226,12 +226,13 @@ Cave2 = sum(C)/N;
 
 %% CLUSTRING COEFFICIENT PROB. DISTRIBUTION
 s = unique(C);                              % Unique Occurrences
+%k = unique(d);
 Cpk = histc(C,s)';                          % counts occurrences
 Cpk = Cpk/sum(Cpk);                         % normalize to 1
 
 % Cumulative distribution
 CPk = cumsum(Cpk,'reverse');
-figure(5);
+figure(6);
 plot(s,CPk,'+');
 grid
 hold on
@@ -250,26 +251,14 @@ title('Clustring Coefficient Distribution')
 %First we should check the availability of Giant Component that Molly-Reed
 %Criterian holds
 
-% find the largest connected component
-e1 = [1;zeros(N-1,1)];
-exit = false;
-while(~exit)
-    e1_old = e1;
-    e1 = 1*(A*e1+e1>0);
-    exit = (sum(e1-e1_old)==0);
-end
-pos = find(e1);
-GC = A(pos,pos);
-N_GC = size(GC,1);
-
 % Random Network
-Rand_inhom_Ratio = Var_D / Mean_D;                    %A randomly wired network has a giant component
-if Rand_inhom_Ratio > 2                               %if the inhomogeneity ratio K = ?k2? / ?k? satisfies
-    disp('For the Random Network There is a Gianet Component')   % K > 2
-end
+% Rand_inhom_Ratio = Var_D / Mean_D;                    %A randomly wired network has a giant component
+% if Rand_inhom_Ratio > 2                               %if the inhomogeneity ratio K = ?k2? / ?k? satisfies
+%     disp('For the Random Network There is a Gianet Component')   % K > 2
+% end
 
-% Scale free Network (ga>3)
-gama = max(ga2);
+% Scale free Network (gama = 2.5565)
+gama = ga;
 if gama > 3
     ScFree_inhom_Ratio = kmin.*(gama-2)./(gama-3);
 elseif (2<gama) && (gama<3)
@@ -277,4 +266,4 @@ elseif (2<gama) && (gama<3)
 elseif (1<gama) && (gama<2)
         ScFree_inhom_Ratio = kmin.*(2-gama)./(3-gama).*N^(1./(gama-1));
 end
-display('For the Scale free Network The Inhomogeneity Ratio is = '+ScFree_inhom_Ratio);
+%display('For the Scale free Network The Inhomogeneity Ratio is = '+ScFree_inhom_Ratio);
