@@ -251,19 +251,43 @@ title('Clustring Coefficient Distribution')
 %First we should check the availability of Giant Component that Molly-Reed
 %Criterian holds
 
-% Random Network
-% Rand_inhom_Ratio = Var_D / Mean_D;                    %A randomly wired network has a giant component
-% if Rand_inhom_Ratio > 2                               %if the inhomogeneity ratio K = ?k2? / ?k? satisfies
-%     disp('For the Random Network There is a Gianet Component')   % K > 2
-% end
+%Random Network
+Au_update = Au;
+Rand_inhom_Ratio = mean(d.^2) / mean(d);                    %A randomly wired network has a giant component
+
+for i = 1:N-1
+    j = ceil((N-i)*rand)+1;
+    Au_update(:,j) = [];
+    Au_update(j,:) = [];
+    d_update = full(sum(Au_update));
+    
+    mom2_k = mean(d_update.^2);
+    mom1_k = mean(d_update);
+    
+    Rand_inhom_Ratio_update = mom2_k ./mom1_k;
+    Rand_inhom_Ratio = [Rand_inhom_Ratio Rand_inhom_Ratio_update];
+end
+
+figure(7);
+loglog(Rand_inhom_Ratio,'.');
+grid
+hold on
+hline = refline([0 2]);
+hline.Color = 'r';
+hline.LineWidth = 1;
+hold off
+xlabel('k')
+ylabel('<K^2> / <K> ')
+title('Robustness for Random failure')
+
 
 % Scale free Network (gama = 2.5565)
-gama = ga;
-if gama > 3
-    ScFree_inhom_Ratio = kmin.*(gama-2)./(gama-3);
-elseif (2<gama) && (gama<3)
-        ScFree_inhom_Ratio = kmin.*(gama-2)./(3-gama).*N^((3-gama)./(gama-1));
-elseif (1<gama) && (gama<2)
-        ScFree_inhom_Ratio = kmin.*(2-gama)./(3-gama).*N^(1./(gama-1));
-end
+% gama = ga;
+% if gama > 3
+%     ScFree_inhom_Ratio = kmin.*(gama-2)./(gama-3);
+% elseif (2<gama) && (gama<3)
+%         ScFree_inhom_Ratio = kmin.*(gama-2)./(3-gama).*N^((3-gama)./(gama-1));
+% elseif (1<gama) && (gama<2)
+%         ScFree_inhom_Ratio = kmin.*(2-gama)./(3-gama).*N^(1./(gama-1));
+% end
 %display('For the Scale free Network The Inhomogeneity Ratio is = '+ScFree_inhom_Ratio);
