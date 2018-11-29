@@ -172,7 +172,7 @@ end
 
 % do the linear fitting
 p = polyfit(log(u'),log(k_nn),1);
-disp(['Assortativity factor ' num2str(p(1))]) %assortativity factor
+disp(['Assortativity factor =' num2str(p(1))])          %Assortativity factor
 
 
 %% %%%%%%%%%%%%%%%%% SHOW RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,7 +222,7 @@ end
 %C = C(C>0);
 C = full(C);
 Cave2 = sum(C)/N;
- display("Average Clustering Coefficient = "+Cave2)
+ disp(['Average Clustering Coefficient = ' num2str(Cave2)])
 
 %% CLUSTRING COEFFICIENT PROB. DISTRIBUTION
 s = unique(C);                              % Unique Occurrences
@@ -244,16 +244,16 @@ hold off
 xlabel('k')
 ylabel('PDF')
 title('Clustring Coefficient Distribution')
-%% %%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%%%%%
 %Robustness: if you knock out x% of nodes/edges, how many % survive ?
 
-% Inhomogeneity Ratio: 
-%First we should check the availability of Giant Component that Molly-Reed
-%Criterian holds
+%%% Inhomogeneity Ratio: 
+inhom_Ratio = mean(d.^2)./mean(d);                  
+disp(['The Inhomogeneity Ratio = ' num2str(inhom_Ratio)])
 
-%Random Network
+%%% Robustness for Random Attack failure
 Au_update = Au;
-Rand_inhom_Ratio = mean(d.^2) / mean(d);                    %A randomly wired network has a giant component
+Rand_inhom_Ratio = mean(d.^2) ./ mean(d);                  
 
 for i = 1:N-1
     j = ceil((N-i)*rand)+1;
@@ -268,26 +268,37 @@ for i = 1:N-1
     Rand_inhom_Ratio = [Rand_inhom_Ratio Rand_inhom_Ratio_update];
 end
 
+%%% Robustness for Attacks (Adversary which removes all hubs first)
+
+Au_update = Au;
+Attack_inhom_Ratio = mean(d.^2) ./ mean(d);                  
+
+for i = 1:N-1
+    [hub_degree,hub_index] = max(d_update);
+    j = hub_index;
+    Au_update(:,j) = [];
+    Au_update(j,:) = [];
+    d_update = full(sum(Au_update));
+    
+    mom2_k = mean(d_update.^2);
+    mom1_k = mean(d_update);
+    
+    Attack_inhom_Ratio_update = mom2_k ./mom1_k;
+    Attack_inhom_Ratio = [Attack_inhom_Ratio Attack_inhom_Ratio_update];
+end
+
+% Showing the results (with Molly-Reed criteria)
+
 figure(7);
-loglog(Rand_inhom_Ratio,'.');
-grid
+loglog(Rand_inhom_Ratio,'-.');
 hold on
+loglog(Attack_inhom_Ratio,'g-.');
 hline = refline([0 2]);
 hline.Color = 'r';
 hline.LineWidth = 1;
 hold off
-xlabel('k')
-ylabel('<K^2> / <K> ')
-title('Robustness for Random failure')
-
-
-% Scale free Network (gama = 2.5565)
-% gama = ga;
-% if gama > 3
-%     ScFree_inhom_Ratio = kmin.*(gama-2)./(gama-3);
-% elseif (2<gama) && (gama<3)
-%         ScFree_inhom_Ratio = kmin.*(gama-2)./(3-gama).*N^((3-gama)./(gama-1));
-% elseif (1<gama) && (gama<2)
-%         ScFree_inhom_Ratio = kmin.*(2-gama)./(3-gama).*N^(1./(gama-1));
-% end
-%display('For the Scale free Network The Inhomogeneity Ratio is = '+ScFree_inhom_Ratio);
+grid;
+legend('Random failure','Attacks','Molly-Reed criteria');
+xlabel('k');
+ylabel('<K^2> / <K> ');
+title('Robustness');
