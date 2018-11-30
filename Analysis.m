@@ -234,16 +234,11 @@ Cpk = Cpk/sum(Cpk);                         % normalize to 1
 CPk = cumsum(Cpk,'reverse');
 figure(6);
 plot(s,CPk,'+');
+xline(Cave2,'r--',{'Average Clustring Coefficient'});
 grid
-hold on
-hline = refline([0 Cave1]);
-hline.Color = 'r';
-hline.LineWidth = 1;
-hline.DisplayName = 'Average Clustering Coefficient';
-hold off
-xlabel('k')
-ylabel('PDF')
-title('Clustring Coefficient Distribution')
+xlabel('Clustrring Coefficient')
+ylabel('CCDF')
+title('Clustring Coefficient CCDF')
 %% %%%%%%%%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%%%%%
 %Robustness: if you knock out x% of nodes/edges, how many % survive ?
 
