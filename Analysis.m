@@ -297,3 +297,47 @@ legend('Random failure','Attacks','Molly-Reed criteria');
 xlabel('k');
 ylabel('<K^2> / <K> ');
 title('Robustness');
+
+
+%%      Community Detection
+
+
+Au = 1*(A+A'>0); % undirected network
+Au = Au - diag(diag(Au)); % clear diagonal (you never know)
+
+% remove nodes which are NOT connected
+pos = find(sum(Au)~=0);
+A = A(pos,pos);
+Au = Au(pos,pos);
+N = size(Au,1);
+
+% Spectral approach
+
+% Laplacian eigen extraction
+d = full(sum(Au));
+Di = spdiags(1./sqrt(d'),0,N,N);
+L = spdiags(ones(N,1),0,N,N) - Di*Au*Di;
+
+% extract and plot eigenvalues
+if N<2e3 % do it only if nodes are not too many!!!
+    la = eigs(L,N); % eigenvalues
+    
+    figure(1)
+    plot(la,'x')
+    grid
+    title('eigenvalues (of the normalized Laplacian)')
+end
+
+%%
+% extract eigenvectors
+[V,DD] = eigs(L,6,'SA');
+Vv = Di*V; % normalize eigenvectors
+v1 = Vv(:,6)/norm(Vv(:,2)); % Fiedler's vector
+v2 = Vv(:,5)/norm(Vv(:,3)); 
+
+
+%%
+[V,DD] = eigs(L,6,'SA');
+
+
+sum(v2<0)
