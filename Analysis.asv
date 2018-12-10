@@ -433,5 +433,26 @@ xlabel('PageRank value')
 title('communities')
 
 
+%% Community identified by connected components in our disconnected graph
 
+groups=zeros(656,1)
+d=sum(A,2);
+fracd=1./d;
+mat_fracd=fracd*ones(1,656);
+sum(mat_fracd,2)
 
+trans_mat=A.*mat_;
+for i=1:656
+    if groups(i)==0
+        stat_distr=zeros(656,1);
+        stat_distr(i)=1
+        for u=1:100
+            
+            
+            
+        end
+        
+        
+        
+    end
+end
