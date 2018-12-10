@@ -457,5 +457,67 @@ for i=1:656
 end
 
 
+%% Clustering on biggest connected component
 
+
+sum(groups==1)
+pos=(groups==1);
+
+part_A=A(pos,pos);
+
+
+N = size(part_A,1);
+d = full(sum(part_A)); % degree vector
+D = sum(d); % degrees sum
+I = spdiags(ones(N,1),0,N,N); % identity matrix
+Di = spdiags(1./sqrt(d'),0,N,N); % diagonal degrees square-rooted
+L = I - Di*part_A*Di; % normalized Laplacian
+M = part_A*Di*Di; % normalized adjacancy matrix
+
+
+%% spectral approach on part_A
+
+% extract eigenvectors
+[V,DD] = eigs(L,6,'SA');
+Vv = Di*V; % normalize eigenvectors
+v1 = Vv(:,2)/norm(Vv(:,2)); % Fiedler's vector
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[v1s,pos] = sort(v1,'descend');
+Au1 = part_A(pos,pos);
+% evaluate the conductance measure
+a = sum(triu(Au1));
+b = sum(tril(Au1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:end-1);
+% show the conductance measure
+figure(2)
+plot(conduct,'x-')
+grid
+title('conductance')
+% identify the minimum -> threshold
+[~,mpos] = min(conduct);
+threshold = mean(v1s(mpos:mpos+1));
+disp('spectral approach')
+disp(['   Minimum conductance: ' num2str(conduct(mpos))])
+disp(['   Cheeger''s upper bound: ' num2str(sqrt(2*DD(2,2)))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos))])
+disp(['   Assoc value: ' num2str(assoc(mpos))])
+disp(['   Community size #1: ' num2str(mpos)])
+disp(['   Community size #2: ' num2str(N-mpos)])
+disp([' '])
+
+% community identified by sign of v1
+
+groups=ones(602,1)
+groups(v1>0)=2
+disp('spectral approach')
+disp("based only on sign of Fiedler's vector")
+disp(['   Community size #1: ' num2str( sum(v1>0))])
+disp(['   Community size #2: ' num2str(sum(v1<0))])
+disp([' '])
 
