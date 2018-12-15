@@ -4,11 +4,16 @@ clc
 
 % IMPORT & Polishing Data%
 G = csvread('Adj.csv',1,1);
+party_name = readtable("party_name.csv");
+party_name = party_name(:,2);
+
 N = max(size(G));
 A = sparse(G);
 clear G;
 figure(1)
 spy(A)
+
+
 
 %% pre-processing
 
@@ -19,6 +24,7 @@ Au = Au - diag(diag(Au)); % clear diagonal (you never know)
 pos = find(sum(Au)~=0);
 A = A(pos,pos);
 Au = Au(pos,pos);
+party_name=party_name(pos,1)
 spy(Au);
 
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -623,7 +629,7 @@ oo=1./sum(A);
 oo(oo==Inf)=0;
 D=diag(oo);
 Ad=sparse(A*D);
-eAd=sparse(e'*Ad)
+eAd=sparse(e'*Ad);
 check=1;
 iter=0;
 v=sparse((1/n).*ones(n,1));
@@ -640,5 +646,13 @@ end
 
 
 pr=v;
+%% Show page rank results
 
+[spr,per]=sort(pr,'descend');
+result = table;
+result.partyname=party_name(per,1);
+result.PageRank=spr;
+result.Degree = sum(A,2);
+
+result(1:25,:)
 

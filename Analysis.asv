@@ -4,11 +4,16 @@ clc
 
 % IMPORT & Polishing Data%
 G = csvread('Adj.csv',1,1);
+party_name = readtable("party_name.csv");
+party_name = party_name(:,2);
+
 N = max(size(G));
 A = sparse(G);
 clear G;
 figure(1)
 spy(A)
+
+
 
 %% pre-processing
 
@@ -20,6 +25,7 @@ pos = find(sum(Au)~=0);
 A = A(pos,pos);
 Au = Au(pos,pos);
 spy(Au);
+sum(A~=
 
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -628,8 +634,8 @@ check=1;
 iter=0;
 v=sparse((1/n).*ones(n,1));
 toll=1e-4;
-alpha=0.85
-toll=0.
+alpha=0.85;
+toll=0.0001;
 
 while check>toll
     vold=v;
