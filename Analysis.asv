@@ -442,7 +442,7 @@ mat_fracd=fracd*ones(1,656);
 trans_mat=A.*mat_fracd;
 sum(trans_mat,2)
 
-%%
+
 g=1
 for i=1:656
     if groups(i)==0
@@ -457,15 +457,26 @@ for i=1:656
 end
 
 
+
+%%
+G=graph(A);
+[bins,binsizes] = conncomp(G);
+mask=(bins==1);
+plot(G)
+part_A=A(mask,mask);
+
+
 %% Clustering on biggest connected component
 
 
 sum(groups==1)
 pos=(groups==1);
 
-part_A=A(pos,pos);
+part_A1=A(pos,pos);
 
 
+sum(part_A~=part_A1)
+%%
 N = size(part_A,1);
 d = full(sum(part_A)); % degree vector
 D = sum(d); % degrees sum
@@ -516,6 +527,118 @@ disp([' '])
 groups=ones(602,1)
 groups(v1>0)=2
 disp('spectral approach')
-disp('spectral approach')
+disp("based only on sign of Fiedler's vector")
+disp(['   Community size #1: ' num2str( sum(v1>0))])
+disp(['   Community size #2: ' num2str(sum(v1<0))])
+disp([' '])
+
+
+
+%% PageRank-nibble approach 
+
+if mpos<N-mpos  % select seed node from the smaller group
+    i = pos(1); % we select the more relevant from the perspective of the spectral approach
+else
+    i = pos(end);
+end
+q = zeros(N,1);
+q(i) = 1; % teleport vector
+c = 0.85;
+r = (I-c*M)\((1-c)*q); % ranking vector
+ep = 1e-3; % precision
+
+% run PageRank-nibble
+u = zeros(N,1); % starting point
+v = q; % starting point
+th = full(ep*d/D)'; % thresholds
+count = 0; % exit counter
+complexity = 0; % complexity value (# of operations)
+ii = i; % starting index used for Push operation
+while (count<N)
+    if v(ii)>th(ii) % push if above threshold
+        tmp = v(ii);
+        u(ii) = u(ii)+(1-c)*tmp;
+        v(ii) = 0;
+        v = v + c*M(:,ii)*tmp;    
+        complexity = complexity + d(ii); % update complexity
+        count = 0; % reset the exit counter
+    else % go to next entry if below threshold
+        count = count + 1; % increase the exit counter
+        ii = mod(ii,N)+1; % update the index used for Push
+    end
+end
+
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[u1s,pos2] = sort(u,'descend');
+Nmax = find(u1s>0,1,'last'); % discard nodes with 0 values (never used in Push)
+Au1 = Au(pos2,pos2(1:Nmax));
+% evaluate the conductance measure
+a = sum(triu(Au1));
+b = sum(tril(Au1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:Nmax-1); 
+% identify the minimum -> threshold
+[~,mpos2] = min(conduct);
+threshold2 = mean(u1s(mpos2:mpos2+1));
+disp('PageRank-nibble approach')
+disp(['   complexity/D: ' num2str((complexity/D))])
+disp(['   epsilon: ' num2str(ep)])
+disp(['   prec: ' num2str(norm(r-u,1))])
+disp(['   Minimum conductance: ' num2str(conduct(mpos2))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos2))])
+disp(['   Assoc value: ' num2str(assoc(mpos2))])
+disp(['   Community size #1: ' num2str(mpos2)])
+disp(['   Community size #2: ' num2str(N-mpos2)])
+
+% show sweep choice
+figure(2)
+plot(conduct)
+grid
+ylabel('conductance')
+title('sweep choice')
+
+% show network with partition
+figure(1)
+plot(u,v1,'k.')
+hold on
+% plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')
+plot(threshold2*[1,1],ylim,'g-')
+plot(xlim,threshold*[1,1],'r-')
+hold off
+grid
+ylabel('Fiedler''s eigenvector value')
+xlabel('PageRank value')
+title('communities')
+
+%% Page rank
+
+n=size(A,1);
+e=ones(n,1);
+oo=1./sum(A);
+oo(oo==Inf)=0;
+D=diag(oo);
+Ad=sparse(A*D);
+eAd=sparse(e'*Ad)
+check=1;
+iter=0;
+v=sparse((1/n).*ones(n,1));
+toll=1e-4;
+alpha=0.85
+toll=0.
+
+while check>toll
+    vold=v;
+    v=alpha*Ad*vold+1/n*(1-alpha*eAd*vold)*e ;
+    check=sum(abs(v-vold));
+    iter=iter+1;
+end
+
+
+pr=v;
 
 
