@@ -656,3 +656,38 @@ result.Degree = sum(A,2);
 
 result(1:25,:)
 
+%% Using the function fun_kryl.m compute the total comunicability of every node
+addpath('.\funm_kryl\')
+param.function = @expm;       % other choices: 'expBA', 'expCF', ...
+param.restart_length = 10;
+param.max_restarts = 50;
+param.hermitian = 0;          % set 0 if A is not Hermitian
+param.V_full = 0;             % set 1 if you need Krylov basis
+param.H_full = 1;             % if using rational functions you can set this 0
+param.exact = [];          % if not known set to []
+param.bound = 0;              % returns upper and lower bounds (after some cycles)
+param.stopping_accuracy = 1e-10;  % stopping accuracy
+param.inner_product = @inner_product;
+param.thick = [];             % thick-restart function  
+param.min_decay = 0.95;       % we desire linear error reduction of rate < .95 
+param.waitbar = 1;            % show waitbar 
+param.reorth_number = 0;      % #reorthogonalizations
+param = param_init(param);    % check and correct param structure
+
+[Tc,out1] = funm_kryl(A,ones(n,1),param);
+%% show result total comunicability
+
+[sper,peer]=sort(Tc,'descend');
+
+rescom=table
+rescom = table;
+rescom.PartyName=party_name(peer,1);
+rescom.Communicability=sper;
+rescom.PageRank=pr(peer);
+
+rescom.Degree = sum(A,2);
+
+
+
+
+rescom(1:25,:)
