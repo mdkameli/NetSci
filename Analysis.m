@@ -4,11 +4,16 @@ clc
 
 % IMPORT & Polishing Data%
 G = csvread('Adj.csv',1,1);
+party_name = readtable("party_name.csv");
+party_name = party_name(:,2);
+
 N = max(size(G));
 A = sparse(G);
 clear G;
 figure(1)
 spy(A)
+
+
 
 %% pre-processing
 
@@ -19,6 +24,7 @@ Au = Au - diag(diag(Au)); % clear diagonal (you never know)
 pos = find(sum(Au)~=0);
 A = A(pos,pos);
 Au = Au(pos,pos);
+party_name=party_name(pos,1)
 spy(Au);
 
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -442,7 +448,7 @@ mat_fracd=fracd*ones(1,656);
 trans_mat=A.*mat_fracd;
 sum(trans_mat,2)
 
-%%
+
 g=1
 for i=1:656
     if groups(i)==0
@@ -457,15 +463,26 @@ for i=1:656
 end
 
 
+
+%%
+G=graph(A);
+[bins,binsizes] = conncomp(G);
+mask=(bins==1);
+plot(G)
+part_A=A(mask,mask);
+
+
 %% Clustering on biggest connected component
 
 
 sum(groups==1)
 pos=(groups==1);
 
-part_A=A(pos,pos);
+part_A1=A(pos,pos);
 
 
+sum(part_A~=part_A1)
+%%
 N = size(part_A,1);
 d = full(sum(part_A)); % degree vector
 D = sum(d); % degrees sum
@@ -521,3 +538,156 @@ disp(['   Community size #1: ' num2str( sum(v1>0))])
 disp(['   Community size #2: ' num2str(sum(v1<0))])
 disp([' '])
 
+
+
+%% PageRank-nibble approach 
+
+if mpos<N-mpos  % select seed node from the smaller group
+    i = pos(1); % we select the more relevant from the perspective of the spectral approach
+else
+    i = pos(end);
+end
+q = zeros(N,1);
+q(i) = 1; % teleport vector
+c = 0.85;
+r = (I-c*M)\((1-c)*q); % ranking vector
+ep = 1e-3; % precision
+
+% run PageRank-nibble
+u = zeros(N,1); % starting point
+v = q; % starting point
+th = full(ep*d/D)'; % thresholds
+count = 0; % exit counter
+complexity = 0; % complexity value (# of operations)
+ii = i; % starting index used for Push operation
+while (count<N)
+    if v(ii)>th(ii) % push if above threshold
+        tmp = v(ii);
+        u(ii) = u(ii)+(1-c)*tmp;
+        v(ii) = 0;
+        v = v + c*M(:,ii)*tmp;    
+        complexity = complexity + d(ii); % update complexity
+        count = 0; % reset the exit counter
+    else % go to next entry if below threshold
+        count = count + 1; % increase the exit counter
+        ii = mod(ii,N)+1; % update the index used for Push
+    end
+end
+
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[u1s,pos2] = sort(u,'descend');
+Nmax = find(u1s>0,1,'last'); % discard nodes with 0 values (never used in Push)
+Au1 = Au(pos2,pos2(1:Nmax));
+% evaluate the conductance measure
+a = sum(triu(Au1));
+b = sum(tril(Au1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:Nmax-1); 
+% identify the minimum -> threshold
+[~,mpos2] = min(conduct);
+threshold2 = mean(u1s(mpos2:mpos2+1));
+disp('PageRank-nibble approach')
+disp(['   complexity/D: ' num2str((complexity/D))])
+disp(['   epsilon: ' num2str(ep)])
+disp(['   prec: ' num2str(norm(r-u,1))])
+disp(['   Minimum conductance: ' num2str(conduct(mpos2))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos2))])
+disp(['   Assoc value: ' num2str(assoc(mpos2))])
+disp(['   Community size #1: ' num2str(mpos2)])
+disp(['   Community size #2: ' num2str(N-mpos2)])
+
+% show sweep choice
+figure(2)
+plot(conduct)
+grid
+ylabel('conductance')
+title('sweep choice')
+
+% show network with partition
+figure(1)
+plot(u,v1,'k.')
+hold on
+% plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')
+plot(threshold2*[1,1],ylim,'g-')
+plot(xlim,threshold*[1,1],'r-')
+hold off
+grid
+ylabel('Fiedler''s eigenvector value')
+xlabel('PageRank value')
+title('communities')
+
+%% Page rank
+
+n=size(A,1);
+e=ones(n,1);
+oo=1./sum(A);
+oo(oo==Inf)=0;
+D=diag(oo);
+Ad=sparse(A*D);
+eAd=sparse(e'*Ad);
+check=1;
+iter=0;
+v=sparse((1/n).*ones(n,1));
+toll=1e-4;
+alpha=0.85;
+toll=0.0001;
+
+while check>toll
+    vold=v;
+    v=alpha*Ad*vold+1/n*(1-alpha*eAd*vold)*e ;
+    check=sum(abs(v-vold));
+    iter=iter+1;
+end
+
+
+pr=v;
+%% Show page rank results
+
+[spr,per]=sort(pr,'descend');
+result = table;
+result.partyname=party_name(per,1);
+result.PageRank=spr;
+result.Degree = sum(A,2);
+
+result(1:25,:)
+
+%% Using the function fun_kryl.m compute the total comunicability of every node
+addpath('.\funm_kryl\')
+param.function = @expm;       % other choices: 'expBA', 'expCF', ...
+param.restart_length = 10;
+param.max_restarts = 50;
+param.hermitian = 0;          % set 0 if A is not Hermitian
+param.V_full = 0;             % set 1 if you need Krylov basis
+param.H_full = 1;             % if using rational functions you can set this 0
+param.exact = [];          % if not known set to []
+param.bound = 0;              % returns upper and lower bounds (after some cycles)
+param.stopping_accuracy = 1e-10;  % stopping accuracy
+param.inner_product = @inner_product;
+param.thick = [];             % thick-restart function  
+param.min_decay = 0.95;       % we desire linear error reduction of rate < .95 
+param.waitbar = 1;            % show waitbar 
+param.reorth_number = 0;      % #reorthogonalizations
+param = param_init(param);    % check and correct param structure
+
+[Tc,out1] = funm_kryl(A,ones(n,1),param);
+%% show result total comunicability
+
+[sper,peer]=sort(Tc,'descend');
+
+rescom=table
+rescom = table;
+rescom.PartyName=party_name(peer,1);
+rescom.Communicability=sper;
+rescom.PageRank=pr(peer);
+
+rescom.Degree = sum(A,2);
+
+
+
+
+rescom(1:25,:)
