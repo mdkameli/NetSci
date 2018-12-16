@@ -198,7 +198,7 @@ Ei = cn(d>1).';                             % Number of edges between nodes of n
 %E_Max = 0.5*d(d>1).*(d(d>1)-1);             % Maximum Number of Edges (Pairs)
 C1 = 2*Ei./d(d>1)./(d(d>1)-1);                              % Clustring Coefficient
 %C1 = C1(C1>0);
-Cave1 = sum(C1)/N;
+Cave1 = sum(C1)/length(C1);
 
 %% %%%%%%%%%%%%%% CLUSTRING COEFFICIENT 2 %%%%%%%%%%%%%%%%%%%%%%
 for i=1:length(Au)
