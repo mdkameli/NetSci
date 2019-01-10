@@ -3,12 +3,12 @@ clear all
 clc
 
 % IMPORT & Polishing Data%
-G = csvread('bipar_dat.csv',1,1);
+G = csvread('gauss_Adj.csv',1,1);
 party_name = readtable("party_name.csv");
 party_name = party_name(:,2);
 fullname=readtable("full_name.csv");
 fullname = fullname(:,2);
-party_name=fullname;
+%party_name=fullname;
 
 
 N = max(size(G));
@@ -28,7 +28,7 @@ Au = Au - diag(diag(Au)); % clear diagonal (you never know)
 pos = find(sum(Au)~=0);
 A = A(pos,pos);
 Au = Au(pos,pos);
-party_name=party_name(pos,1)
+party_name=party_name(pos,1);
 spy(Au);
 
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
