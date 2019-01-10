@@ -8,7 +8,7 @@ party_name = readtable("party_name.csv");
 party_name = party_name(:,2);
 fullname=readtable("full_name.csv");
 fullname = fullname(:,2);
-party_name=fullname
+party_name=fullname;
 
 
 N = max(size(G));
@@ -654,7 +654,7 @@ pr=v;
 
 [spr,per]=sort(pr,'descend');
 result = table;
-result.partyname=party_name(per,1);
+result.Ideas_name=party_name(per,1);
 result.PageRank=spr;
 result.Degree = sum(A,2);
 
