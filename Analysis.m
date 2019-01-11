@@ -3,12 +3,12 @@ clear all
 clc
 
 % IMPORT & Polishing Data%
-G = csvread('gauss_Adj.csv',1,1);
+G = csvread('bpar_Adj_center.csv',1,1);
 party_name = readtable("party_name.csv");
 party_name = party_name(:,2);
-fullname=readtable("full_name.csv");
+fullname=readtable("center_name.csv");
 fullname = fullname(:,2);
-%party_name=fullname;
+party_name=fullname;
 
 
 N = max(size(G));
