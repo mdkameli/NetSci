@@ -3,32 +3,30 @@ clear all
 clc
 
 % IMPORT & Polishing Data%
-G = csvread('bpar_Adj_center.csv',1,1);
+G = csvread('Adj.csv',1,1);
+
 party_name = readtable("party_name.csv");
 party_name = party_name(:,2);
-fullname=readtable("center_name.csv");
-fullname = fullname(:,2);
-party_name=fullname;
 
+ideas_name = readtable("Ideas_name.csv");
+ideas_name = ideas_name(:,2);
+
+full_name = vertcat(party_name,ideas_name);
 
 N = max(size(G));
 A = sparse(G);
 clear G;
-figure(1)
-spy(A)
-
-
 
 %% pre-processing
 
-Au = 1*(A+A'>0); % undirected network
-Au = Au - diag(diag(Au)); % clear diagonal (you never know)
+Au = 1*(A+A'>0);                    % undirected network
+Au = Au - diag(diag(Au));           % clear diagonal (you never know)
 
 % Remove nodes which are NOT connected
 pos = find(sum(Au)~=0);
 A = A(pos,pos);
 Au = Au(pos,pos);
-party_name=party_name(pos,1);
+full_name = full_name(pos,1);
 spy(Au);
 
 %% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,19 +54,13 @@ pklog = pklog/sum(pklog);   % normalize to 1
 %% %%%%%%%%%%%%%%%%% MOMENTS OF DEGREE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%
 
 Mean_D = mean(d);           % First Moment of prob. distribution
-                           % -- G before was Mean_K = mean(k), but actually k is
-                           % -- G the vector of unique values, we should
-                           % -- G use d; the same for all other mesures
 display("First Moment of prob. distribution= "+Mean_D)
 
-
 Var_D = var(d);             % Second Moment of Prob. distribution (Express the spread)
-
 display("Second Moment of Prob. distribution= "+Var_D)
 
 Skew_D = skewness(d);       % Third Moment of Prob. distribution (How symmetric around average)
 display("Third Moment of Prob. distribution= "+Skew_D)
-
 
 %% %%%%%%%%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%% 
 figure(2)
@@ -97,14 +89,12 @@ xlabel('k')
 ylabel('CCDF')
 title('logarithmic CCDF plot')
 
-
 %% %%%%%%%%%%%%%%%%% PURE ML FITTING %%%%%%%%%%%%%%%%%%%%%%%%%
 
 kmin = 40;
 d2 = d(d>=kmin);                 % restrict range
 ga = 1+1/mean(log(d2/kmin));     % estimate the exponent
 disp(['gamma ML = ' num2str(ga)])
-
 
 %% %%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -169,7 +159,6 @@ ylabel('CCDF')
 title('ML fittings')
 legend('data','ML','ML with sat.')
 
-
 %% %%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY %%%%%%%%%%%%%%%%%%%%%%%%%
 
 k_tmp = (A*d')./d'; % the average degree of neighbours
@@ -187,7 +176,7 @@ disp(['Assortativity factor =' num2str(p(1))])          %Assortativity factor
 
 %% %%%%%%%%%%%%%%%%% SHOW RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
 
-figure(1)
+figure(6)
 loglog(d,k_tmp,'g.');
 hold on
 loglog(u,exp(p(2)+log(u)*p(1)),'r-');
@@ -200,6 +189,7 @@ title('Assortativity of the Collaboration Network')
 
 
 %% %%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 1 %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Clustring Coefficient: Measure density of links in the neighbourhood
 
 cn = diag(full((Au*triu(Au)*Au)));          % Number of triangles for each node
@@ -208,9 +198,10 @@ Ei = cn(d>1).';                             % Number of edges between nodes of n
 %E_Max = 0.5*d(d>1).*(d(d>1)-1);             % Maximum Number of Edges (Pairs)
 C1 = 2*Ei./d(d>1)./(d(d>1)-1);                              % Clustring Coefficient
 %C1 = C1(C1>0);
-Cave1 = sum(C1)/length(C1);
+Cave1 = sum(C1)/N;
 
 %% %%%%%%%%%%%%%% CLUSTRING COEFFICIENT 2 %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=1:length(Au)
   str(i).child = find(Au(i,:)>0);
 end
@@ -242,7 +233,7 @@ Cpk = Cpk/sum(Cpk);                         % normalize to 1
 
 % Cumulative distribution
 CPk = cumsum(Cpk,'reverse');
-figure(6);
+figure(7);
 plot(s,CPk,'+');
 xline(Cave2,'r--',{'Average Clustring Coefficient'});
 grid
@@ -250,6 +241,7 @@ xlabel('Clustrring Coefficient')
 ylabel('CCDF')
 title('Clustring Coefficient CCDF')
 %% %%%%%%%%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Robustness: if you knock out x% of nodes/edges, how many % survive ?
 
 %%% Inhomogeneity Ratio: 
@@ -294,7 +286,7 @@ end
 
 % Showing the results (with Molly-Reed criteria)
 
-figure(7);
+figure(8);
 loglog(Rand_inhom_Ratio,'-.');
 hold on
 loglog(Attack_inhom_Ratio,'g-.');
@@ -309,39 +301,44 @@ ylabel('<K^2> / <K> ');
 title('Robustness');
 
 
-%%      Community Detection
+%% %%%%%%%%%%%%%%%%% Community Detection %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+G = csvread('gauss_Adj.csv',1,1);
+N = max(size(G));
+B = sparse(G);
+clear G;
 
-Au = 1*(A+A'>0); % undirected network
-Au = Au - diag(diag(Au)); % clear diagonal (you never know)
+Bu = 1*(B+B'>0);                    % undirected network
+Bu = Bu - diag(diag(Bu));           % clear diagonal (you never know)
 
 % remove nodes which are NOT connected
-pos = find(sum(Au)~=0);
-A = A(pos,pos);
-Au = Au(pos,pos);
-N = size(Au,1);
+pos = find(sum(Bu)~=0);
+B = B(pos,pos);
+Bu = Bu(pos,pos);
+N = size(Bu,1);
 
-d = full(sum(Au)); % degree vector
-D = sum(d); % degrees sum
-I = spdiags(ones(N,1),0,N,N); % identity matrix
-Di = spdiags(1./sqrt(d'),0,N,N); % diagonal degrees square-rooted
-L = I - Di*Au*Di; % normalized Laplacian
-M = Au*Di*Di; % normalized adjacancy matrix
+% Laplacian Matrix generation
+d = full(sum(Bu));                   % degree vector
+D = sum(d);                          % degrees sum
+I = spdiags(ones(N,1),0,N,N);        % identity matrix
+Di = spdiags(1./sqrt(d'),0,N,N);     % diagonal degrees square-rooted
+L = I - Di*Bu*Di;                    % normalized Laplacian
+M = Bu*Di*Di;                        % normalized adjacancy matrix
 
-
-%% spectral approach 
+%% %%%%%%%%%%%%%%%%%%%%%%% spectral approach %%%%%%%%%%%%%%%%%%%%%% 
 
 % extract eigenvectors
 [V,DD] = eigs(L,6,'SA');
-Vv = Di*V; % normalize eigenvectors
-v1 = Vv(:,2)/norm(Vv(:,2)); % Fiedler's vector
+Vv = Di*V;                          % normalize eigenvectors
+v1 = Vv(:,2)/norm(Vv(:,2));         % Fiedler's vector
 % sweep wrt the ordering identified by v1
 % reorder the adjacency matrix
 [v1s,pos] = sort(v1,'descend');
-Au1 = Au(pos,pos);
+Bu1 = Bu(pos,pos);
 % evaluate the conductance measure
-a = sum(triu(Au1));
-b = sum(tril(Au1));
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
 assoc = cumsum(a+b);
 assoc = min(assoc,D-assoc);
 cut = cumsum(b-a);
@@ -350,6 +347,7 @@ conduct = conduct(1:end-1);
 % identify the minimum -> threshold
 [~,mpos] = min(conduct);
 threshold = mean(v1s(mpos:mpos+1));
+disp([' '])
 disp('spectral approach')
 disp(['   Minimum conductance: ' num2str(conduct(mpos))])
 disp(['   Cheeger''s upper bound: ' num2str(sqrt(2*DD(2,2)))])
@@ -360,38 +358,37 @@ disp(['   Community size #1: ' num2str(mpos)])
 disp(['   Community size #2: ' num2str(N-mpos)])
 disp([' '])
 
+%% %%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%% 
 
-%% PageRank-nibble approach 
-
-if mpos<N-mpos  % select seed node from the smaller group
-    i = pos(1); % we select the more relevant from the perspective of the spectral approach
+if mpos<N-mpos              % select seed node from the smaller group
+    i = pos(1);             % we select the more relevant from the perspective of the spectral approach
 else
     i = pos(end);
 end
 q = zeros(N,1);
-q(i) = 1; % teleport vector
+q(i) = 1;                   % teleport vector
 c = 0.85;
-r = (I-c*M)\((1-c)*q); % ranking vector
-ep = 1e-3; % precision
+r = (I-c*M)\((1-c)*q);      % ranking vector
+ep = 1e-3;                  % precision
 
 % run PageRank-nibble
-u = zeros(N,1); % starting point
-v = q; % starting point
-th = full(ep*d/D)'; % thresholds
-count = 0; % exit counter
-complexity = 0; % complexity value (# of operations)
-ii = i; % starting index used for Push operation
+u = zeros(N,1);             % starting point
+v = q;                      % starting point
+th = full(ep*d/D)';         % thresholds
+count = 0;                  % exit counter
+complexity = 0;             % complexity value (# of operations)
+ii = i;                     % starting index used for Push operation
 while (count<N)
-    if v(ii)>th(ii) % push if above threshold
+    if v(ii)>th(ii)         % push if above threshold
         tmp = v(ii);
         u(ii) = u(ii)+(1-c)*tmp;
         v(ii) = 0;
         v = v + c*M(:,ii)*tmp;    
         complexity = complexity + d(ii); % update complexity
-        count = 0; % reset the exit counter
-    else % go to next entry if below threshold
-        count = count + 1; % increase the exit counter
-        ii = mod(ii,N)+1; % update the index used for Push
+        count = 0;          % reset the exit counter
+    else                    % go to next entry if below threshold
+        count = count + 1;  % increase the exit counter
+        ii = mod(ii,N)+1;   % update the index used for Push
     end
 end
 
@@ -399,10 +396,10 @@ end
 % reorder the adjacency matrix
 [u1s,pos2] = sort(u,'descend');
 Nmax = find(u1s>0,1,'last'); % discard nodes with 0 values (never used in Push)
-Au1 = Au(pos2,pos2(1:Nmax));
+Bu1 = Bu(pos2,pos2(1:Nmax));
 % evaluate the conductance measure
-a = sum(triu(Au1));
-b = sum(tril(Au1));
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
 assoc = cumsum(a+b);
 assoc = min(assoc,D-assoc);
 cut = cumsum(b-a);
@@ -423,14 +420,14 @@ disp(['   Community size #1: ' num2str(mpos2)])
 disp(['   Community size #2: ' num2str(N-mpos2)])
 
 % show sweep choice
-figure(2)
+figure(9)
 plot(conduct)
 grid
 ylabel('conductance')
 title('sweep choice')
 
 % show network with partition
-figure(1)
+figure(10)
 plot(u,v1,'k.')
 hold on
 % plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')
@@ -445,15 +442,14 @@ title('communities')
 
 %% Community identified by connected components in our disconnected graph
 
-groups=zeros(656,1)
+groups=zeros(656,1);
 d=sum(A,2);
 fracd=1./d;
 mat_fracd=fracd*ones(1,656);
 trans_mat=A.*mat_fracd;
-sum(trans_mat,2)
+sum(trans_mat,2);
 
-
-g=1
+g=1;
 for i=1:656
     if groups(i)==0
         stat_distr=zeros(656,1);
@@ -467,26 +463,23 @@ for i=1:656
 end
 
 
-
 %%
-G=graph(A);
+G = graph(A);
 [bins,binsizes] = conncomp(G);
 mask=(bins==1);
+figure(11);
 plot(G)
 part_A=A(mask,mask);
 
-
 %% Clustering on biggest connected component
 
+sum(groups==1);
+pos =(groups==1);
+part_A1 = A(pos,pos);
+sum(part_A ~= part_A1);
 
-sum(groups==1)
-pos=(groups==1);
-
-part_A1=A(pos,pos);
-
-
-sum(part_A~=part_A1)
 %%
+
 N = size(part_A,1);
 d = full(sum(part_A)); % degree vector
 D = sum(d); % degrees sum
@@ -494,7 +487,6 @@ I = spdiags(ones(N,1),0,N,N); % identity matrix
 Di = spdiags(1./sqrt(d'),0,N,N); % diagonal degrees square-rooted
 L = I - Di*part_A*Di; % normalized Laplacian
 M = part_A*Di*Di; % normalized adjacancy matrix
-
 
 %% spectral approach on part_A
 
@@ -515,13 +507,14 @@ cut = cumsum(b-a);
 conduct = cut./assoc;
 conduct = conduct(1:end-1);
 % show the conductance measure
-figure(2)
+figure(12)
 plot(conduct,'x-')
 grid
 title('conductance')
 % identify the minimum -> threshold
 [~,mpos] = min(conduct);
 threshold = mean(v1s(mpos:mpos+1));
+disp([' '])
 disp('spectral approach')
 disp(['   Minimum conductance: ' num2str(conduct(mpos))])
 disp(['   Cheeger''s upper bound: ' num2str(sqrt(2*DD(2,2)))])
@@ -534,8 +527,8 @@ disp([' '])
 
 % community identified by sign of v1
 
-groups=ones(602,1)
-groups(v1>0)=2
+groups = ones(602,1);
+groups(v1>0)=2;
 disp('spectral approach')
 disp("based only on sign of Fiedler's vector")
 disp(['   Community size #1: ' num2str( sum(v1>0))])
@@ -606,14 +599,14 @@ disp(['   Community size #1: ' num2str(mpos2)])
 disp(['   Community size #2: ' num2str(N-mpos2)])
 
 % show sweep choice
-figure(2)
+figure(13)
 plot(conduct)
 grid
 ylabel('conductance')
 title('sweep choice')
 
 % show network with partition
-figure(1)
+figure(14)
 plot(u,v1,'k.')
 hold on
 % plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')
@@ -648,13 +641,12 @@ while check>toll
     iter=iter+1;
 end
 
-
 pr=v;
 %% Show page rank results
 
 [spr,per]=sort(pr,'descend');
 result = table;
-result.Ideas_name=party_name(per,1);
+result.Ideas_name=full_name(per,1);
 result.PageRank=spr;
 result.Degree = sum(A,2);
 
@@ -668,7 +660,7 @@ param.max_restarts = 50;
 param.hermitian = 0;          % set 0 if A is not Hermitian
 param.V_full = 0;             % set 1 if you need Krylov basis
 param.H_full = 1;             % if using rational functions you can set this 0
-param.exact = [];          % if not known set to []
+param.exact = [];             % if not known set to []
 param.bound = 0;              % returns upper and lower bounds (after some cycles)
 param.stopping_accuracy = 1e-10;  % stopping accuracy
 param.inner_product = @inner_product;
@@ -683,15 +675,10 @@ param = param_init(param);    % check and correct param structure
 
 [sper,peer]=sort(Tc,'descend');
 
-rescom=table
 rescom = table;
-rescom.PartyName=party_name(peer,1);
+rescom.PartyName=full_name(peer,1);
 rescom.Communicability=sper;
 rescom.PageRank=pr(peer);
-
 rescom.Degree = sum(A,2);
-
-
-
 
 rescom(1:25,:)
