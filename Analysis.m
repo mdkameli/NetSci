@@ -96,29 +96,6 @@ d2 = d(d>=kmin);                 % restrict range
 ga = 1+1/mean(log(d2/kmin));     % estimate the exponent
 disp(['gamma ML = ' num2str(ga)])
 
-%% %%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
-
-figure(3)
-subplot(2,2,2)
-hold on
-s1 = k.^(-ga); % build the PDF signal
-loglog(k,s1/s1(103)*pk(103));
-hold off
-axis([xlim min(pk/2) 2*max(pk)])
-subplot(2,2,3)
-hold on
-s1 = klog.^(-ga); % build the PDF signal
-loglog(klog,s1/s1(21)*pklog(21));
-hold off
-axis([xlim min(pklog/2) 2*max(pklog)])
-subplot(2,2,4)
-hold on
-s1 = k.^(1-ga); % build the CCDF signal
-loglog(k,s1/s1(100)*Pk(100));
-hold off
-axis([xlim min(Pk/2) 2])
-
-
 %% %%%%%%%%%%%%%%%%% ML FITTING WITH SATURATION %%%%%%%%%%%%%%%%%%
 d1=d(d>30);
 for ks = 1:max(k)
@@ -133,13 +110,6 @@ disp(['gamma ML sat = ' num2str(ga2(ks))])
 
 
 %% %%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
-
-figure(4)
-semilogy(de)
-grid
-xlabel('k_sat')
-ylabel('ML target function')
-title('best k_{sat} value')
 
 figure(5)
 % data
@@ -358,6 +328,13 @@ disp(['   Community size #1: ' num2str(mpos)])
 disp(['   Community size #2: ' num2str(N-mpos)])
 disp([' '])
 
+%% %%%%%%%%%%%%%%%%%%%%%%%%% Kmean Approach %%%%%%%%%%%%%%%%%%%%%%%%%%
+LRC = kmeans(V(:,2:6),3);
+disp([' '])
+disp('Kmean approach')
+disp("  Community size #1: "+sum(LRC == 1))
+disp("  Community size #2: "+sum(LRC == 2))
+disp("  Community size #3: "+sum(LRC == 3))
 %% %%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%% 
 
 if mpos<N-mpos              % select seed node from the smaller group
@@ -442,40 +419,18 @@ title('communities')
 
 %% Community identified by connected components in our disconnected graph
 
-groups=zeros(656,1);
-d=sum(A,2);
-fracd=1./d;
-mat_fracd=fracd*ones(1,656);
-trans_mat=A.*mat_fracd;
-sum(trans_mat,2);
-
-g=1;
-for i=1:656
-    if groups(i)==0
-        stat_distr=zeros(656,1);
-        stat_distr(i)=1;
-        for u=1:100
-            stat_distr=trans_mat*stat_distr;         
-        end  
-        groups(stat_distr~=0)=g;
-        g=g+1;
-    end
-end
-
-
-%%
-G = graph(A);
+G = graph(Bu);
 [bins,binsizes] = conncomp(G);
 mask=(bins==1);
 figure(11);
 plot(G)
-part_A=A(mask,mask);
+part_A=Bu(mask,mask);
 
 %% Clustering on biggest connected component
 
-sum(groups==1);
-pos =(groups==1);
-part_A1 = A(pos,pos);
+sum(bins==1);
+pos =(bins==1);
+part_A1 = Bu(pos,pos);
 sum(part_A ~= part_A1);
 
 %%
@@ -527,17 +482,13 @@ disp([' '])
 
 % community identified by sign of v1
 
-groups = ones(602,1);
-groups(v1>0)=2;
 disp('spectral approach')
 disp("based only on sign of Fiedler's vector")
 disp(['   Community size #1: ' num2str( sum(v1>0))])
 disp(['   Community size #2: ' num2str(sum(v1<0))])
 disp([' '])
 
-
-
-%% PageRank-nibble approach 
+%% %%%%%%%%%%%%%%% PageRank-nibble approach for the biggest component %%%%
 
 if mpos<N-mpos  % select seed node from the smaller group
     i = pos(1); % we select the more relevant from the perspective of the spectral approach
@@ -575,10 +526,10 @@ end
 % reorder the adjacency matrix
 [u1s,pos2] = sort(u,'descend');
 Nmax = find(u1s>0,1,'last'); % discard nodes with 0 values (never used in Push)
-Au1 = Au(pos2,pos2(1:Nmax));
+Bu1 = Bu(pos2,pos2(1:Nmax));
 % evaluate the conductance measure
-a = sum(triu(Au1));
-b = sum(tril(Au1));
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
 assoc = cumsum(a+b);
 assoc = min(assoc,D-assoc);
 cut = cumsum(b-a);
@@ -642,7 +593,7 @@ while check>toll
 end
 
 pr=v;
-%% Show page rank results
+%% %%%%%%%%%%%%%%%%%%%% Show page rank results %%%%%%%%%%%%%%%%%%%%%%%
 
 [spr,per]=sort(pr,'descend');
 result = table;
@@ -671,7 +622,7 @@ param.reorth_number = 0;      % #reorthogonalizations
 param = param_init(param);    % check and correct param structure
 
 [Tc,out1] = funm_kryl(A,ones(n,1),param);
-%% show result total comunicability
+%% %%%%%%%%%%%%%%%%%% show result total comunicability %%%%%%%%%%%%%%%%%%
 
 [sper,peer]=sort(Tc,'descend');
 
