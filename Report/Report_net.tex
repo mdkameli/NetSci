@@ -34,10 +34,33 @@ What we aim to achieve with this work is to derive and analize the network of eu
 
 On such network we will run our analysis trying to spot behaviours and insits of the political scene. Moreover we will try to detect the communities inside this network in order to see if the actual division of the parties overlaps with the decleared one, and consequently see which are the parties that, based on their ideas, are not distiguishable by their adversary.
 
-\section{Manifesto Project}
+\section*{Manifesto Project}
 
 The Manifesto Project - "https://manifesto-project.wzb.eu/" - is a German project which aims to mantain and contiously update different political dataset. Their main work is the "Manifesto Project Dataset", a dataset containing at the moment 4388 political manifestos published from 1945 till today by 1117 parties.
+They publish and mantain this dataset in order to be able to conduct scientific research on the european political field, but not explicitly exploiting network science or graph theory.
 
+We found this project really interesting because contains information about the processing of parties' the political manifestos. The great advantage of using the Manifesto Project work is not only the high number of manifestos present there, but also 
+the way they extracted information about manifestos and how they ecoded that.
+In Manifesto Project dataset there is a good number of variables representing diferent ideas, like "Imperialism" or "Welfare State Expansion", giving tham for each manifesto a score representing "how much a manifesto reflects that idea".
+\\
+
+As we said we wanted to build a network of parties exploiting what they think and not what they declare, here the limit is evident but building a network on political manifesto and the ideas that it reflects could be considered a good approximation of reality.
+
+We will than exploit Manifesto Project dataset to build our network.
+\\
+\\
+\\
+
+
+\section{The Network}
+
+The first problem we had to deal with is how to exploit a general dataset to build a meaningfull network. We come up with a nice idea and after some research we found out that it's a quite used way to proced. 
+Before talking about how we built our adjacncy matrix it's important to underlign the data engeneering we went through.
+
+Our dataset was composed by 1117 parties and we had in total 4388 manifestos, so we had an avererage of 4 manifestos for each party. We had to decide how to deal with the greater number of manifestos with respect to the parties. A natural way to proceed is to average the score of the manifestos for each party, and that's what we did. This is a meaningfull way to proceed because like that what we work on is an averege idea's score over the time for each party. Another possible way to proceed would be taking only the last available manifesto's score, one would have obtained the most recent data but losing past information, this could bring to biased masures due to the variability of ideas in parties, a mean over time brings to zero the score for all that ideas where a party showed contradictorial positions over time, underlining the one where a party actualy based his existnce.
+\\
+
+Said that we can jump to the adjacency matrix.
 
 
 
