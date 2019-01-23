@@ -18,7 +18,7 @@
 
 \title{%
   Political Manifesto Analysis \\
-  \large A network science approach}
+  \large Technical Report}
 
 \date{2019, January}
 \author{Giovanni Misseri, Mohammad Kameli, Jolan Chabbey \\ \\ 
@@ -60,7 +60,9 @@ Before talking about how we built our adjacncy matrix it's important to underlig
 Our dataset was composed by 1117 parties and we had in total 4388 manifestos, so we had an avererage of 4 manifestos for each party. We had to decide how to deal with the greater number of manifestos with respect to the parties. A natural way to proceed is to average the score of the manifestos for each party, and that's what we did. This is a meaningfull way to proceed because like that what we work on is an averege idea's score over the time for each party. Another possible way to proceed would be taking only the last available manifesto's score, one would have obtained the most recent data but losing past information, this could bring to biased masures due to the variability of ideas in parties, a mean over time brings to zero the score for all that ideas where a party showed contradictorial positions over time, underlining the one where a party actualy based his existnce.
 \\
 
-Said that we can jump to the adjacency matrix.
+Said that we can jump to the adjacency matrix. We took our restructured dataset made by 1114 rows, the number of parties without missing data in taget variables, and 56 coulmns, the set of main ideas Manifesto Project gives score. First of all we computed the paiwise distance matrix, in which in position \emph{i,j} is present the euclidean distance between party's \emph{i} ideas and party's \emph{j} ideas. 
+At this point we needed to decide a treshold for which if two parties are nearer than that, they are connected, otherwise theey are not. This approach will create a simmetric unwheighted adjacency matrix and will be the one on which we will conduct the gratest part of our analysis.
+A particularity of this approach is that is comparable with the hierarchical clustering in particular with the sigle linkage hierarchical clustering, this will be crucial for future analysis.
 
 
 
