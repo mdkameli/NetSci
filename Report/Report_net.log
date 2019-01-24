@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  24 JAN 2019 15:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  24 JAN 2019 23:53
 entering extended mode
 **./Report_net.tex
 (Report_net.tex
@@ -359,29 +359,128 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--107
 
  []
 
-[7 <./images/ML_fit.jpg>] [8] (Report_net.aux) ) 
+[7 <./images/ML_fit.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
+
+ []
+
+<./images/Assortativity.jpg, id=34, 702.625pt x 526.96875pt>
+File: ./images/Assortativity.jpg Graphic file (type jpg)
+<use ./images/Assortativity.jpg>
+Package pdftex.def Info: ./images/Assortativity.jpg  used on input line 124.
+(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
+
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 124--125
+[][] 
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 131--133
+
+ []
+
+[9 <./images/Assortativity.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 140--142
+
+ []
+
+<./images/Clustering_Coefficient.jpg, id=42, 702.625pt x 526.96875pt>
+File: ./images/Clustering_Coefficient.jpg Graphic file (type jpg)
+<use ./images/Clustering_Coefficient.jpg>
+Package pdftex.def Info: ./images/Clustering_Coefficient.jpg  used on input lin
+e 145.
+(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
+
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 145--146
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 152--154
+
+ []
+
+[10 <./images/Clustering_Coefficient.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 162--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--167
+
+ []
+
+<./images/Robustness.jpg, id=46, 702.625pt x 526.96875pt>
+File: ./images/Robustness.jpg Graphic file (type jpg)
+<use ./images/Robustness.jpg>
+Package pdftex.def Info: ./images/Robustness.jpg  used on input line 169.
+(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
+
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 169--170
+[][] 
+ []
+
+[11]
+<./images/Dendrogramma.jpg, id=50, 722.7pt x 698.61pt>
+File: ./images/Dendrogramma.jpg Graphic file (type jpg)
+<use ./images/Dendrogramma.jpg>
+Package pdftex.def Info: ./images/Dendrogramma.jpg  used on input line 184.
+(pdftex.def)             Requested size: 361.3491pt x 349.30414pt.
+
+Overfull \hbox (31.3491pt too wide) in paragraph at lines 184--185
+[][] 
+ []
+
+[12 <./images/Robustness.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
+
+ []
+
+[13 <./images/Dendrogramma.jpg>]
+<./images/disc_graph.jpg, id=58, 702.625pt x 526.96875pt>
+File: ./images/disc_graph.jpg Graphic file (type jpg)
+<use ./images/disc_graph.jpg>
+Package pdftex.def Info: ./images/disc_graph.jpg  used on input line 205.
+(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
+
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 205--206
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--213
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 216--218
+
+ []
+
+[14 <./images/disc_graph.jpg>] [15] (Report_net.aux) ) 
 Here is how much of TeX's memory you used:
- 2926 strings out of 492970
- 44348 string characters out of 3123929
+ 2955 strings out of 492970
+ 45101 string characters out of 3123929
  106376 words of memory out of 3000000
- 6763 multiletter control sequences out of 15000+200000
- 38526 words of font info for 37 fonts, out of 3000000 for 9000
+ 6786 multiletter control sequences out of 15000+200000
+ 44419 words of font info for 39 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,6n,32p,1145b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/luigimissri/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/luigimissri
-/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}<C:/Users/luigi
-missri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/U
-sers/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi10
-.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
-/lm/lmmi7.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
-e1/public/lm/lmr10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/lm/lmr12.pfb><C:/Users/luigimissri/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Users/luigimissri/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb>
-Output written on Report_net.pdf (8 pages, 333218 bytes).
+{C:/Users/luigimissri/App
+Data/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/luigimiss
+ri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}<C:/Users
+/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb
+><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/
+lmmi10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
+public/lm/lmmi7.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/lm/lmr10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/luigimissri/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Users/luigimissri/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Users/luigimissri/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb>
+Output written on Report_net.pdf (15 pages, 1103308 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
+ 93 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

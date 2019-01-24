@@ -110,22 +110,113 @@ The one reported above is the plot obtained by the estimation of the $\gamma$ ex
 The point estimate are respectively $2.5565$ and $6.6197$ for maximum likelihood estimate and ML with sat parameter. The high value obtained in the second case is due to the high cut-off present in the distribution, so we will consider the ML point estimate as $\gamma$ exponent of our power law distribution. 
 As one can notice our power low exponent is between 2 and 3 so as we said we are in scale free regime with ultra small world property. A quite surprising property this one in our context, infact we would have extected to find a kind of compartimental network, in which nodes distribute in communities dense of link within their self but low connected between each other, this would have limited the ultra small world property instead this prooves that in realy few jumps we can go from extreme right nodes to extreme left nodes. This suggest an underlying homogeneity between parties that actualy seems to differ that low one from each other to result in an ultra small world regime.
 
-\section*{Network Behaviour}
+\section*{Network Analysis}
+
+In this chapter we would like to analyze different features of our network namely: Assortativity, Clustering coefficient, Robustness of the network to the random failure and an attack and finally find the communities in our network with different approaches.
+
+\subsection*{Assortativity}
+
+In general, (dis)assortativity stands for the preference of a network's nodes to attach to others due to their degree. In short, Assortative network is defined as high degree nodes connect with each other avoiding low degree nodes (tend to cliques) and Disassortative network tends to opposite trend, which means that hubs tend to avoid each other. 
+
+For the political manifesto network, we expect to find the assortativity in our network regarding the parties with the same manifest tend to connect to each other though the hubs which may stand as the leader of right-left parties should avoid each other, thus not a perfect assortativity behavior but neither disassortative nor neutral network. Fig. 4 shows the assortativity of our network.
+\\
+
+\includegraphics[scale=0.5]{Assortativity}
+\begin{center}
+\begin{small}
+Fig. 4. Assortativity behavior of our network and fitting line for assortativity factor
+\end{small}
+\end{center}
+
+~
+\\
+
+In this regard, we explore an assortative behavior as we expected and also a structural cut-off for k = 100. Finally the Assortativity factor is 0.18504 for our network.
+
+An interpretation of the assortativity in this context suggest we are in the right direction and the positive assortativity estimation is supported too. If we carefuly think to what assortativity is and try to apply it to this context we will find that an assortative network is what we expected. Indeed given that the assortativity mesures "how mutch" hubs clusters with each other and how mutch low degree nodes do the same, we can translate this like a mesure of how mutch central parties tends to cluster and how mutch extreme parties tend to cluster. This phenomenon is then absolutely expected, would we weird infact to mesure disassortativity here, minor or extreme parties usualy are not directly connected with big parties, infact if their ideas were "the popular one" they wouldn't be minorities.
+
+\subsection*{Clustering Coefficient}
+
+Analyzing the neighbors of each parties lead us to find the clustering coefficient and compute the average clustering coefficient for political manifest network. In short, the clustering coefficient measures the density of links in the neighborhood which means how the parties which are tightened to each other as a neighbor are linked. Moreover, we plot the CCDF of the clustering coefficient to represent the behavior of the network for neighbors. Fig. 5. Show the result.
+\\
 
 
 
+\includegraphics[scale=0.5]{Clustering_Coefficient}
+\begin{center}
+\begin{small}
+Fig. 5. CCDF of clustering coefficient and average measurement
+\end{small}
+\end{center}
+
+~
+\\
+
+In this figure we also consider the nodes which have zero coefficient which are almost 20\% of our nodes, due to that there parties which are not linked as a tripled graph. In addition, the average clustering coefficient measurement for our network is: 0.446.
 
 
+\subsection*{Robustness}
+
+One of the most important aspect of studying political manifest would be to find the robustness of the network. It leads us to find the property of being strong in a community.
+
+Interesting part of this study would be to find when we can failure a network and how to do it. For instance, consider a competition that the right parties want to win the left parties. Utilizing this property each community could determine by enlisting which parties or ideas could lead the other community to collapse. Implementing robustness with attack could be consider as a future study of this network. 
+\\
+
+In our computational aspects we only consider whole network for random failure and an attack by removing random nodes and hubs with the highest degree respectively. Fig. 6 show the robustness of our network and as we could realize from the fig. 6. The distance between random failure and an attack for general network is robust and strong to attacks. Moreover, Molly-Reed criteria which is considered as a threshold for vanishing the giant component (GC) in our network is showed by a red line. It means network lower than that criteria would lose the GC.
+\\
 
 
+\includegraphics[scale=0.5]{Robustness}
+\begin{center}
+\begin{small}
+Fig. 6. Robustness of the network for random failure (green) and attack (blue) with Molly-Reed criteria (red)
+\end{small}
+\end{center}
+
+\section*{Community detection}
+
+In this chapter we will talk about community detection and we will describe our steps to spot the communities in the manifesto network.
+
+Our first idea was simply to go streight on with community detection on the usual adjacency matrix, but this resulted a bad approch for different reason.
+We builted our matrix using an $\epsilon$-neighbour thecnique, as we said this is conceptually similal with respect doing hierarchical clustering using single linkage. Below a figure of a tipical a single linkage dendrogram.
+In this example the blue line indicates where we decided to cut and the dot represent the connected component we get.
+
+\includegraphics[scale=0.5]{Dendrogramma}
+\begin{center}
+\begin{small}
+Fig. 7. Example of a single linkage dendrogram
+\end{small}
+\end{center}
+
+~
+\\
+
+If we carefully think about what we did we discover that actually is the same think, we computed a distance matrix and we putted to 1 all the entries where we found a value less than $\epsilon$, 0 otherwise. Take it like a scratch of the proof by induction: at distance zero all nodes are disconnected, at distance one suppose two nodes link together, at distance 2 all the nodes nearer that 2 to a node belonging to this cluster will join too.
+
+We end up in the situation shown in Fig 7. and actually is what happened to our network, indeed our network if made by different disconnected networks. Note also that this explain why we had that much nodes not connected to any other nodes, this is infact a common behaviour in single linkage hierarchical clustering, such that the presence of a biggest component.
+
+Actually the disconnected components of our network already are a clustering, but our main aim is to divide the network in its natural tree communities: right, left and center.
+The actual clustering naturally provided by disconnected components of the network doest provide such division.
 
 
+The one below is a plot of our network.
 
 
+\includegraphics[scale=0.5]{disc_graph}
+\begin{center}
+\begin{small}
+Fig. 8. Manifesto's network
+\end{small}
+\end{center}
+~
+\\
 
+As shown in the figure our actual network doesn't fit the task of computing communities, and also doing clustering on the biggest component brought not satisfactory results.
 
+We decided than to use a different approach and starting agin from the initial dataset, create a different adjacency matrix.
+\\
 
-
+Given that the gratest part of our problems come from th fact that our network was disconnected we worked to overcome that issue. We decided to use the distance matrix in order to build a Gaussian similarity matrix.
 
 
 
