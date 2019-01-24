@@ -12,7 +12,8 @@
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
-
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 
 
@@ -63,6 +64,55 @@ Our dataset was composed by 1117 parties and we had in total 4388 manifestos, so
 Said that we can jump to the adjacency matrix. We took our restructured dataset made by 1114 rows, the number of parties without missing data in taget variables, and 56 coulmns, the set of main ideas Manifesto Project gives score. First of all we computed the paiwise distance matrix, in which in position \emph{i,j} is present the euclidean distance between party's \emph{i} ideas and party's \emph{j} ideas. 
 At this point we needed to decide a treshold for which if two parties are nearer than that, they are connected, otherwise theey are not. This approach will create a simmetric unwheighted adjacency matrix and will be the one on which we will conduct the gratest part of our analysis.
 A particularity of this approach is that is comparable with the hierarchical clustering in particular with the sigle linkage hierarchical clustering, this will be crucial for future analysis.
+We decided to cut the distance matrix at 10. We choose this value on further analysis and this is the treshold that created the most reasonable matrix. With a higher value we would have had more connected nodes, but on the other hand we would have lost important links; with a lower value we would have had too muchnodes not connected with no other node.
+
+\section*{Preliminary Analysis}
+
+After the $\epsilon$-neighborhood procedure explained before to create the adjacency matrix we are ready to do some analysis on our graph. First of all we start with some preliminary analysis in order to understand the context we are working on and the kind of graph we have to deal with.
+\\
+
+As first importand step is necessary to remove all the nodes that are not connected at all, since we can't gain more information from their inclusion in futher analysis. Anyway given the fact that we have 549 nodes that are not connected at all this is an important limit to our analysis, so it's important to understand why almost half of the nodes are not connected with no other node. Generally it's normal the presence of some outlier in your dataset when you compute your analysis,  but here we have a significant part of our data showing this behaviour. A possible interpretation could come from the context the data come from; we are talking about parties and what they put in their manifestos, saying that two parties are connected only if they are sufficiently near implyes that we cut all that links that exist on the "margin" of our network, we will take only the central part of the network. This seems confirmed also by the political interpretation one can give to this phenomenon, with this approach we are able to correctly catch the relations between "central" parties, but we exclude all the extreme parties.
+Don't forget also that our dataset ranges from 1945 till now, so seems reasonable that there was lot of different parties, not necessary extreme in the political meaning but very different one from the others.
+
+An other mathematical reason could be due to the way we built our adjacency matrix. Apart from the treshold we had to decide, the quantity of single nodes could also due to the single linkage hierarchical clustering behaviour we talked before. 
+\\
+
+We that procedet to the delition of the single nodes and we obtaind a graph made by 656 nodes.
+What follows is the related adjacecy matrix.
+
+\includegraphics[scale=0.5]{Adj}
+
+\section*{Nodes Distribution}
+
+The first important aspect we what to inspect about the notwork is its degree destribution and its estimate. Moments of the degree distribution are of particular interest, in our case we have a network in which the avrage number of link for each node is 28.625, the variance is 1500.079 and the skewness is 1.7576.
+So every party is connected on average to 28 other parties, but it's important to notice that, as we expected, we have a highly skewed degree distribution, sign of possible right outlier, alias hubs.
+
+
+Let's inspect deeper this aspect through the probability distribution function and the log-pdf.
+
+\includegraphics[scale=0.5]{Degree_distr}
+
+From the plots above is evident that as we supposed our network shows different features that makes it possibly a scale free network. For example we have clearly the grates part of nodes which have low degree and few points with high degree. The presence of hubs, indeed, is what distinguish a scale free network from a poisson distributed or random one. In this case the interpretation is a bit controversial, we have some nodes with high degree, but they don't follow the tipical linear decay in log-ccdf plot. 
+
+One explanation for this phenomenon comes from log-pdf plot, from there we can see the linear decay, but it seems to have high variance. Given that this are real data we can't expect to find the well distributed probability distribution function and a linear decay with big variance justify our supposition of scale free distribution of our network.
+Another way to justify tihs behavior comes again from the interpretation of our network in its context. We have parties connected one to the other, and would be unreasonable to have much parties connect with a lot of other parties. It would mean that we have some parties which ideas are similar to both right and left parties, we have some parties that are similar to a lot of other parties; as one can see this is not reasonable in this context. So we have some structural limit due to the context that doesn't allow our network to show a complete and satisfactory scale free bhaviour.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
