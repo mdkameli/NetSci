@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  23 JAN 2019 23:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  24 JAN 2019 15:18
 entering extended mode
 **./Report_net.tex
 (Report_net.tex
@@ -325,32 +325,63 @@ File: ./images/Degree_distr.jpg Graphic file (type jpg)
 Package pdftex.def Info: ./images/Degree_distr.jpg  used on input line 93.
 (pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
 
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 93--94
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 93--95
 [][] 
  []
 
-[5 <./images/Adj.jpg>] [6 <./images/Degree_distr.jpg>] [7] (Report_net.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
+
+ []
+
+[5 <./images/Adj.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 98--101
+
+ []
+
+[6 <./images/Degree_distr.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 102--103
+
+ []
+
+<./images/ML_fit.jpg, id=28, 702.625pt x 526.96875pt>
+File: ./images/ML_fit.jpg Graphic file (type jpg)
+<use ./images/ML_fit.jpg>
+Package pdftex.def Info: ./images/ML_fit.jpg  used on input line 105.
+(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
+
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 105--107
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--107
+
+ []
+
+[7 <./images/ML_fit.jpg>] [8] (Report_net.aux) ) 
 Here is how much of TeX's memory you used:
- 2921 strings out of 492970
- 44243 string characters out of 3123929
+ 2926 strings out of 492970
+ 44348 string characters out of 3123929
  106376 words of memory out of 3000000
- 6759 multiletter control sequences out of 15000+200000
+ 6763 multiletter control sequences out of 15000+200000
  38526 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,6n,32p,1145b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C
-:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mat
-hit.enc}{C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips
-/lm/lm-rm.enc}<C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
-e1/public/lm/lmbx12.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9
-/fonts/type1/public/lm/lmmi10.pfb><C:/Users/luigimissri/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/luigimissri/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/luigimissri/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Users/luigimis
-sri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb>
-Output written on Report_net.pdf (7 pages, 284883 bytes).
+{C:/Users/luigimissri/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/luigimissri
+/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}<C:/Users/luigi
+missri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/U
+sers/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi10
+.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/lm/lmmi7.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
+e1/public/lm/lmr10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/lm/lmr12.pfb><C:/Users/luigimissri/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Users/luigimissri/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb>
+Output written on Report_net.pdf (8 pages, 333218 bytes).
 PDF statistics:
- 54 PDF objects out of 1000 (max. 8388607)
+ 62 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
