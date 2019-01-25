@@ -96,29 +96,6 @@ d2 = d(d>=kmin);                 % restrict range
 ga = 1+1/mean(log(d2/kmin));     % estimate the exponent
 disp(['gamma ML = ' num2str(ga)])
 
-%% %%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
-
-figure(3)
-subplot(2,2,2)
-hold on
-s1 = k.^(-ga); % build the PDF signal
-loglog(k,s1/s1(103)*pk(103));
-hold off
-axis([xlim min(pk/2) 2*max(pk)])
-subplot(2,2,3)
-hold on
-s1 = klog.^(-ga); % build the PDF signal
-loglog(klog,s1/s1(21)*pklog(21));
-hold off
-axis([xlim min(pklog/2) 2*max(pklog)])
-subplot(2,2,4)
-hold on
-s1 = k.^(1-ga); % build the CCDF signal
-loglog(k,s1/s1(100)*Pk(100));
-hold off
-axis([xlim min(Pk/2) 2])
-
-
 %% %%%%%%%%%%%%%%%%% ML FITTING WITH SATURATION %%%%%%%%%%%%%%%%%%
 d1=d(d>30);
 for ks = 1:max(k)
@@ -133,13 +110,6 @@ disp(['gamma ML sat = ' num2str(ga2(ks))])
 
 
 %% %%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
-
-figure(4)
-semilogy(de)
-grid
-xlabel('k_sat')
-ylabel('ML target function')
-title('best k_{sat} value')
 
 figure(5)
 % data
@@ -358,13 +328,31 @@ disp(['   Community size #1: ' num2str(mpos)])
 disp(['   Community size #2: ' num2str(N-mpos)])
 disp([' '])
 
-%% Kmean Approach
-LRC = kmeans(V(:,2:5),3);
+%% %%%%%%%%%%%%%%%%%%%%%%%%% Kmean Approach %%%%%%%%%%%%%%%%%%%%%%%%%%
+LRC = kmeans(V(:,1:3),3);
 disp([' '])
 disp('Kmean approach')
 disp("  Community size #1: "+sum(LRC == 1))
 disp("  Community size #2: "+sum(LRC == 2))
-disp("  Right Community size #3: " +sum(LRC == 3))
+disp("  Community size #3: "+sum(LRC == 3))
+silhouette(V(:,1:3),LRC)
+
+
+
+%% %%%%%%%%%%%%%% Sovrapposition clustering and manual communities
+comt = readtable("community_truth.csv");
+comt = comt(:,2);
+err=0;
+
+for i = 1:length(LRC)
+    if comt(i)~=LRC(i)
+        err=
+    
+    
+end
+
+
+
 %% %%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%% 
 
 if mpos<N-mpos              % select seed node from the smaller group
@@ -518,7 +506,7 @@ disp(['   Community size #1: ' num2str( sum(v1>0))])
 disp(['   Community size #2: ' num2str(sum(v1<0))])
 disp([' '])
 
-%% PageRank-nibble approach 
+%% %%%%%%%%%%%%%%% PageRank-nibble approach for the biggest component %%%%
 
 if mpos<N-mpos  % select seed node from the smaller group
     i = pos(1); % we select the more relevant from the perspective of the spectral approach
@@ -623,7 +611,7 @@ while check>toll
 end
 
 pr=v;
-%% Show page rank results
+%% %%%%%%%%%%%%%%%%%%%% Show page rank results %%%%%%%%%%%%%%%%%%%%%%%
 
 [spr,per]=sort(pr,'descend');
 result = table;
@@ -652,7 +640,7 @@ param.reorth_number = 0;      % #reorthogonalizations
 param = param_init(param);    % check and correct param structure
 
 [Tc,out1] = funm_kryl(A,ones(n,1),param);
-%% show result total comunicability
+%% %%%%%%%%%%%%%%%%%% show result total comunicability %%%%%%%%%%%%%%%%%%
 
 [sper,peer]=sort(Tc,'descend');
 

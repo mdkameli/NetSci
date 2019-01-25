@@ -329,12 +329,30 @@ disp(['   Community size #2: ' num2str(N-mpos)])
 disp([' '])
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%% Kmean Approach %%%%%%%%%%%%%%%%%%%%%%%%%%
-LRC = kmeans(V(:,2:6),3);
+LRC = kmeans(V(:,1:3),3);
 disp([' '])
 disp('Kmean approach')
 disp("  Community size #1: "+sum(LRC == 1))
 disp("  Community size #2: "+sum(LRC == 2))
 disp("  Community size #3: "+sum(LRC == 3))
+silhouette(V(:,1:3),LRC)
+
+
+
+%% %%%%%%%%%%%%%% Sovrapposition clustering and manual communities
+comt = readtable("community_truth.csv");
+comt = table2array(comt(:,2));
+err=0;
+
+for i = 1:length(LRC)
+    if comt(i)~=LRC(i)
+        err=err+1;
+    end
+end
+
+disp("Sovrapposition cluster and manually computed communities=" + (1-err/length(LRC)))
+
+
 %% %%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%% 
 
 if mpos<N-mpos              % select seed node from the smaller group

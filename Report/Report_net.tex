@@ -217,6 +217,33 @@ We decided than to use a different approach and starting agin from the initial d
 \\
 
 Given that the gratest part of our problems come from th fact that our network was disconnected we worked to overcome that issue. We decided to use the distance matrix in order to build a Gaussian similarity matrix.
+\\
+
+So we set $Sim_{i,j}= exp(- \frac{||x_i-x_j||^2}{2\sigma^2})$ with $\sigma^2=200$. So we used this similarity matrix as adjacency matrix. We ended up with a full weighted graph and we run community detection algorithm on this.
+
+We tried different approaches but given that we wanted a specific kind of communities we decided to rely on spectral approach. Theory sais infact that the minimum ratio-cut is the same problem of finding the minimum of finding the minimum of the Rylenght quotien, $\frac{(f'Lf)}{(f'f)}$, given some specific $f$ vector. The linear relaxation of this problem end up in finding the eigenvalues of the laplacian matrix of the network.
+
+Not surprisingly is possible to proove that also the conductance is well approximated by the eigenvectors of the laplacian.
+\\
+
+We decided than to follow this path and we clustered our network in three communities, using kmeans algorithm on the nodes in the space of the last 3 eigenvectors. After some run of the algorithm we can say that if usualy converges to 3 communities respectively containing 755, 295 and 64 nodes.
+\\
+
+Below we report the sihlouette plot relative to our communities detection. Sihlouette is a mesure of how distant each point is from its cluster controid, so the higher the sihlouette value the more reliable the clustering is.
+
+In our case we have a really good result for the bigger community and the smallest one, some doubts could come from the middle-size community for which some entry has low sihlouette value. Anyway this result plus the fact that kmeans converges almost everytime to the same communitis guarantee us these are reliable communities.
+
+\includegraphics[scale=0.5]{sihlouette}
+\begin{center}
+\begin{small}
+Fig. 9. Communities sihlouette
+\end{small}
+\end{center}
+~
+\\
+
+Suggestion for further development of this analysis would be understan why we end up with these communities from a political point of view. 
+In general we can say that on average manually computed communities and the kmeans overlaps on average on $45\%$ of parties.
 
 
 
