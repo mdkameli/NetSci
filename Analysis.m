@@ -344,6 +344,8 @@ comt = readtable("community_truth.csv");
 comt = table2array(comt(:,2));
 err=0;
 
+%suppose we assign 1 to left, 2 to center and 3 to right
+
 for i = 1:length(LRC)
     if comt(i)~=LRC(i)
         err=err+1;

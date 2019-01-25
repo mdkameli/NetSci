@@ -341,17 +341,19 @@ silhouette(V(:,1:3),LRC)
 
 %% %%%%%%%%%%%%%% Sovrapposition clustering and manual communities
 comt = readtable("community_truth.csv");
-comt = comt(:,2);
+comt = table2array(comt(:,2));
 err=0;
-
-for i = 1:length(LRC)
-    if comt(i)~=LRC(i)
-        err=
-    
+clas=zeros(3,1);
+for i = 1:3
+    ve=comt(LRC==i);
+    mod=mode(ve);
+    clas(i,1)=mod;
+    err=err+(sum(ve~=i));
     
 end
 
-
+disp("Sovrapposition cluster and manually computed communities=" + (1-err/length(LRC)))
+disp("Attributed class="+clas)
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%% 
 
