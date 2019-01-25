@@ -439,21 +439,14 @@ title('communities')
 
 %% Community identified by connected components in our disconnected graph
 
-G = graph(Bu);
+G = graph(Au);
 [bins,binsizes] = conncomp(G);
 mask=(bins==1);
 figure(11);
 plot(G)
-part_A=Bu(mask,mask);
+part_A=Au(mask,mask);
 
-%% Clustering on biggest connected component
-
-sum(bins==1);
-pos =(bins==1);
-part_A1 = Bu(pos,pos);
-sum(part_A ~= part_A1);
-
-%%
+%% Clustering on biggest connected component%%
 
 N = size(part_A,1);
 d = full(sum(part_A)); % degree vector

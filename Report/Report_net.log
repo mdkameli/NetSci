@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  25 JAN 2019 15:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  25 JAN 2019 23:26
 entering extended mode
 **./Report_net.tex
 (Report_net.tex
@@ -487,38 +487,70 @@ Underfull \hbox (badness 10000) in paragraph at lines 242--244
 
  []
 
-[16 <./images/sihlouette.jpg>] (Report_net.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 245--248
+
+ []
+
+[16 <./images/sihlouette.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 271--274
+
+ []
+
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 281--283
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 284--286
+
+ []
+
+<./images/communicability.jpg, id=79, 689.57625pt x 419.76825pt>
+File: ./images/communicability.jpg Graphic file (type jpg)
+<use ./images/communicability.jpg>
+Package pdftex.def Info: ./images/communicability.jpg  used on input line 287.
+(pdftex.def)             Requested size: 413.74893pt x 251.86288pt.
+
+Overfull \hbox (83.74893pt too wide) in paragraph at lines 287--288
+[][] 
+ []
+
+[18 <./images/communicability.jpg>] [19] (Report_net.aux) ) 
 Here is how much of TeX's memory you used:
- 2960 strings out of 492970
- 45226 string characters out of 3123929
+ 2965 strings out of 492970
+ 45376 string characters out of 3123929
  106376 words of memory out of 3000000
- 6790 multiletter control sequences out of 15000+200000
+ 6794 multiletter control sequences out of 15000+200000
  44419 words of font info for 39 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,6n,32p,1145b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/luigimissri/AppData/
-Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/luigimissr
-i/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/luig
-imissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}<C:/
-Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx1
-2.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmmi10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/lm/lmmi5.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.
-9/fonts/type1/public/lm/lmmi7.pfb><C:/Users/luigimissri/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/luigimissri/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/luigimissri/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Users/luigimis
-sri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr5.pfb><C:/Users/
-luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C
-:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr
-9.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmri10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/lm/lmsy10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/lm/lmsy5.pfb><C:/Users/luigimissri/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb>
-Output written on Report_net.pdf (16 pages, 1180248 bytes).
+{C:/Users/luigimissr
+i/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/
+luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}
+{C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-r
+m.enc}{C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/l
+m/lm-mathit.enc}<C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/lm/lmbx12.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2
+.9/fonts/type1/public/lm/lmex10.pfb><C:/Users/luigimissri/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Users/luigimissri/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi5.pfb><C:/Users/luigimissri/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Users/luigi
+missri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Us
+ers/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.p
+fb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/l
+m/lmr17.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/lm/lmr5.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/lm/lmr7.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX
+ 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Users/luigimissri/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb><C:/Users/luigimissri/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/luigimissri/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy5.pfb><C:/Users/luig
+imissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb>
+Output written on Report_net.pdf (19 pages, 1336163 bytes).
 PDF statistics:
- 122 PDF objects out of 1000 (max. 8388607)
+ 138 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

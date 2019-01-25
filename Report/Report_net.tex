@@ -244,11 +244,57 @@ Fig. 9. Communities sihlouette
 
 Suggestion for further development of this analysis would be understan why we end up with these communities from a political point of view. 
 In general we can say that on average manually computed communities and the kmeans overlaps on average on $45\%$ of parties.
+\\
+
+As we just said we also have a sort of classification provided by Manifesto project. Indeed they suggest a metric to discriminate right and left side parties, they attached a variable to the dataset meaning that. "Rile", the nominated variable, is defined as $ (per104 + per201 + per203 + per305 + per401 + per402 + per407 +
+per414 + per505 + per601 + per603 + per605 + per606)
+- (per103 + per105 + per106 + per107 + per403 + per404 + per406
++ per412 + per413 + per504 + per506 + per701 + per202) $ where $"per-"$ stends for the ID of an idea. For completness and to be able to "translate" the variable encoding we allegate also the Manifesto project codebook.
 
 
+\section*{Ranking}
+
+\subsection*{Page Rank}
+
+\subsection*{Communicability}
+
+In PageRank the importance of a node$i$  is proportional to the sum of the importances of the nodes $j$ pointing to it. This ceates a rank of nodes based on their importance in the network; but let us suppose now we want to assign to each node a number that quantifies its "well-connectedeness".
+
+A natural choise would be $d_i^{in}= \sum_{j=1}^n A_{i,j}$ or $d_i^{out}= \sum_{i=1}^n A_{i,j}$, but the in degree and the out degree of a node paints a very localized picture of the overall well-connectedeness since they do not distinguish between edges that connect well connected or poorly connected nodes.
+\[ (A^{2})_{ii}= \sum_{k=1}^n a_{i,k}a_{k,i}~~\rightarrow~~
+(A^{k})_{ii}= \sum_{k=1}^n a_{i,k}a_{k,i}^k
+\]
+
+Where $(A^{k})_{ii}$ is the number of walks from $i$ to $i$ of length k. The idea is that a well connected node should have more opportunities to form a closed walk of small length. 
+Shorter walks are tipically more important than longer walks, so we need to penalize the number of walks of length $k$, we choose as penalizing factor $\frac{1}{k!}$
+\[ (I+A+\frac{A^2}{2!}+ ...+\frac{A^k}{k!}+...) =:e^A
+\]
+So we can define the subgraph centrality of the $i$-th node as $(e^A)_{ii}$. In general computing individual entries of a matrix function, in this case $f(A)=e^A$ is costly for large matrices. Anyway in recent years efficient algorithm have been developed for computing the action of a matrix function on a vector.
+\\
+
+Exploiting this last fact we can define the total comunicability of a node $i$ in a network defined by adjacency matrix A as
+\[ t_i:=(e^{A^t}1)_i=\sum_{j=1}^n (e^{A^t})_{i,j}
+\]
+Where $t_i$ counts the number of walks between node $i$ and all the nodes in the network, weighting walks of length $k$ by a penalty factor of $\frac{1}{k!}$.
 
 
+We can also obtain a mesure of total communicability of a network summing up all $t_i$ of each node.
+\\
 
+Said that we report below the communicability rank of our network.
+\\
+
+\includegraphics[scale=0.6]{communicability}
+\begin{center}
+\begin{small}
+Fig. ---. Communicability rank 
+\end{small}
+\end{center}
+~
+\\
+As one can notice PageRank and Communicability agrees on which are the most important nodes, but their ranking is not the same, there is some correlation between the two.
+For further analysis would be interesting to see the robustness of the network if instead of attaking the hubs we attack each time the node with higher communicability. Also inspect why this partis results foundamental for communication.
+To conclude there is one last really intersting application that could be taken into consideration for futher analysis, maybe also the most natural one, simulate the spreading on the network starting from high communicability nodes and mesure the effectiveness of the approach with respect to random start or hubs start.
 
 
 
