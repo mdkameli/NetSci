@@ -610,7 +610,7 @@ pr=v;
 
 [spr,per]=sort(pr,'descend');
 result = table;
-result.Ideas_name=full_name(per,1);
+result.Parties_name=full_name(per,1);
 result.PageRank=spr;
 result.Degree = sum(A,2);
 

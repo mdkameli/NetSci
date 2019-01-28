@@ -22,7 +22,7 @@
   \large Technical Report}
 
 \date{2019, January}
-\author{Giovanni Misseri, Mohammad Kameli, Jolan Chabbey \\ \\ 
+\author{Giovanni Misseri, Mohammad Kameli \\ \\ 
 Network Science course}
 \begin{document}
 \maketitle
@@ -82,6 +82,12 @@ What follows is the related adjacecy matrix.
 
 \includegraphics[scale=0.5]{Adj}
 
+\begin{center}
+\begin{small}
+Fig. 1. Adjeciacy matrix of the network
+\end{small}
+\end{center}
+
 \section*{Nodes Distribution}
 
 The first important aspect we what to inspect about the notwork is its degree destribution and its estimate. Moments of the degree distribution are of particular interest, in our case we have a network in which the avrage number of link for each node is 28.625, the variance is 1500.079 and the skewness is 1.7576.
@@ -91,7 +97,13 @@ So every party is connected on average to 28 other parties, but it's important t
 Let's inspect deeper this aspect through the probability distribution function and the log-pdf.
 
 \includegraphics[scale=0.5]{Degree_distr}
-\\
+
+\begin{center}
+\begin{small}
+Fig. 2. Degree distribution plots
+\end{small}
+\end{center}
+
 
 From the plots above is evident that as we supposed our network shows different features that makes it possibly a scale free network. For example we have clearly the grates part of nodes which have low degree and few points with high degree. The presence of hubs, indeed, is what distinguish a scale free network from a poisson distributed or random one. In this case the interpretation is a bit controversial, we have some nodes with high degree, but they don't follow the tipical linear decay in log-ccdf plot. 
 
@@ -103,7 +115,12 @@ So with the underligned limits we will proceed the analysis assuming we are deal
 
 
 \includegraphics[scale=0.5]{ML_fit}
-\\
+\begin{center}
+\begin{small}
+Fig. 3. Maximum Likelihood fit without and with saturation agains degree distribution
+\end{small}
+\end{center}
+
 
 The one reported above is the plot obtained by the estimation of the $\gamma$ exponent of the power low distribution of our network. The $\gamma$ parameter has been estimated using maximum likelihood, red line, and seems to approximate the log-ccdf behaviour. As we already said is strong the cut-off but the estimate of the $\gamma$ exponent with $k_{sat}$ approximate the ccdf quite well. 
 
@@ -256,6 +273,64 @@ per414 + per505 + per601 + per603 + per605 + per606)
 
 \subsection*{Page Rank}
 
+One of the crucial attitude of Political manifesto is ranking analysis. Ranking define the importance of each node and could lead us to the fatal parties or ideas which have a profound effect on the political manifest. Generally, ranking analysis state of art is raapresented by page rank algorithm which relies on Bonachic index, so it attributes importance to a node proportionally to the sum of the nodes pointing to it. Finding this index reduces in a eigenvalue eigenvector problem which solution brings the ranking. From a  simple modification of the PageRank has been defined a clustering algorithm: Pagerank-Nibble. PageRank-nibble has been implemented to solve our community detection problem, but seemd not really effective.
+
+For the political manifesto network we tried to sort the nodes by the pagerank measurement to identify the most important parties. The results for the firs 25 parties is shown in Fig 10.
+\\
+
+\includegraphics[scale=0.5]{Pagerank}
+\begin{center}
+\begin{small}
+Fig. 10. Parties PageRank
+\end{small}
+\end{center}
+~
+\\
+
+Regarding Fog 10, the 'Social Democratic Party' has the highes ranking value with the value of 0.0072297 which is followed by 'Democratic Peasants’ Party of Germany' parties with value of 0.0071579.
+\\
+
+The one presented above is the ranking of parties on the initial adjacency matrix. We thought it would be politically meaningfull also to have a ranking not only about the parties, but also about the ideas. So we built the a weighted bipartite graph exploiting the initial dataset and we run the page rank on that. As it's easy to immagine, given the big difference in the number of components of each "part" of our bipartite graph, 56 ideas agains 1114 parties, this ended up being the ranking of ideas we where looking for. We also did the ranking on the bipartite graph of the manually computed right, left and center side parties; so we have been able to underlign which are the most important ideas for each political side. Below we report the relative tables.
+\\
+
+\begin{center}
+\includegraphics[scale=0.5]{PageRank_ideas}
+
+\begin{small}
+Fig. 10. Ideas PageRank
+\end{small}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.5]{PageRank_ideas_left}
+
+\begin{small}
+Fig. 11. Ideas PageRank LEFT
+\end{small}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.5]{PageRank_ideas_right}
+
+\begin{small}
+Fig. 12. Ideas PageRank RIGHT
+\end{small}
+\end{center}
+
+
+\begin{center}
+\includegraphics[scale=0.5]{PageRank_ideas_center}
+
+\begin{small}
+Fig. 13. Ideas PageRank CENTER
+\end{small}
+\end{center}
+
+On all this results a political study have been done, the results of the study will be presented the exam day.
+
+
+
+
 \subsection*{Communicability}
 
 In PageRank the importance of a node$i$  is proportional to the sum of the importances of the nodes $j$ pointing to it. This ceates a rank of nodes based on their importance in the network; but let us suppose now we want to assign to each node a number that quantifies its "well-connectedeness".
@@ -279,7 +354,6 @@ Where $t_i$ counts the number of walks between node $i$ and all the nodes in the
 
 
 We can also obtain a mesure of total communicability of a network summing up all $t_i$ of each node.
-\\
 
 Said that we report below the communicability rank of our network.
 \\
@@ -287,7 +361,7 @@ Said that we report below the communicability rank of our network.
 \includegraphics[scale=0.6]{communicability}
 \begin{center}
 \begin{small}
-Fig. ---. Communicability rank 
+Fig. 14 Communicability rank 
 \end{small}
 \end{center}
 ~
@@ -295,6 +369,18 @@ Fig. ---. Communicability rank
 As one can notice PageRank and Communicability agrees on which are the most important nodes, but their ranking is not the same, there is some correlation between the two.
 For further analysis would be interesting to see the robustness of the network if instead of attaking the hubs we attack each time the node with higher communicability. Also inspect why this partis results foundamental for communication.
 To conclude there is one last really intersting application that could be taken into consideration for futher analysis, maybe also the most natural one, simulate the spreading on the network starting from high communicability nodes and mesure the effectiveness of the approach with respect to random start or hubs start.
+\\
+
+
+
+
+
+\section*{Conclusions}
+
+With this work we achieved what we wonted to achieve: we demonstrate the power of a network science approach even on data not explicitly collected for a network definition, we have been able to describe and undertand the network we were dealing with and we extracted important insigt of it.
+\\
+
+Further work on this would be interesting in all the direction we mentioned, but at least for now we broke a little bit the wall that separets us from politics undestanding and describing unseen attitutes.
 
 
 

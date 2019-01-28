@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  25 JAN 2019 23:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.17)  28 JAN 2019 22:44
 entering extended mode
 **./Report_net.tex
 (Report_net.tex
@@ -322,65 +322,56 @@ Overfull \hbox (21.31163pt too wide) in paragraph at lines 83--84
 <./images/Degree_distr.jpg, id=21, 702.625pt x 526.96875pt>
 File: ./images/Degree_distr.jpg Graphic file (type jpg)
 <use ./images/Degree_distr.jpg>
-Package pdftex.def Info: ./images/Degree_distr.jpg  used on input line 93.
+Package pdftex.def Info: ./images/Degree_distr.jpg  used on input line 99.
 (pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
 
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 93--95
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 99--100
 [][] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 93--95
-
- []
-
 [5 <./images/Adj.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 98--101
+Underfull \hbox (badness 10000) in paragraph at lines 110--113
 
  []
 
 [6 <./images/Degree_distr.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 102--103
+Underfull \hbox (badness 10000) in paragraph at lines 114--115
 
  []
 
-<./images/ML_fit.jpg, id=28, 702.625pt x 526.96875pt>
+<./images/ML_fit.jpg, id=29, 702.625pt x 526.96875pt>
 File: ./images/ML_fit.jpg Graphic file (type jpg)
 <use ./images/ML_fit.jpg>
-Package pdftex.def Info: ./images/ML_fit.jpg  used on input line 105.
+Package pdftex.def Info: ./images/ML_fit.jpg  used on input line 117.
 (pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
 
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 105--107
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 117--118
 [][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 105--107
-
  []
 
 [7 <./images/ML_fit.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 121--123
+Underfull \hbox (badness 10000) in paragraph at lines 138--140
 
- []
-
-<./images/Assortativity.jpg, id=34, 702.625pt x 526.96875pt>
-File: ./images/Assortativity.jpg Graphic file (type jpg)
-<use ./images/Assortativity.jpg>
-Package pdftex.def Info: ./images/Assortativity.jpg  used on input line 124.
-(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
-
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 124--125
-[][] 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 131--133
+<./images/Assortativity.jpg, id=38, 702.625pt x 526.96875pt>
+File: ./images/Assortativity.jpg Graphic file (type jpg)
+<use ./images/Assortativity.jpg>
+Package pdftex.def Info: ./images/Assortativity.jpg  used on input line 141.
+(pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
+
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 141--142
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--150
 
  []
 
 [9 <./images/Assortativity.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
+Underfull \hbox (badness 10000) in paragraph at lines 157--159
 
  []
 
@@ -388,35 +379,35 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--142
 File: ./images/Clustering_Coefficient.jpg Graphic file (type jpg)
 <use ./images/Clustering_Coefficient.jpg>
 Package pdftex.def Info: ./images/Clustering_Coefficient.jpg  used on input lin
-e 145.
+e 162.
 (pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
 
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 145--146
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 162--163
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--154
+Underfull \hbox (badness 10000) in paragraph at lines 169--171
 
  []
 
 [10 <./images/Clustering_Coefficient.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 162--164
+Underfull \hbox (badness 10000) in paragraph at lines 179--181
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 165--167
+Underfull \hbox (badness 10000) in paragraph at lines 182--184
 
  []
 
 <./images/Robustness.jpg, id=46, 702.625pt x 526.96875pt>
 File: ./images/Robustness.jpg Graphic file (type jpg)
 <use ./images/Robustness.jpg>
-Package pdftex.def Info: ./images/Robustness.jpg  used on input line 169.
+Package pdftex.def Info: ./images/Robustness.jpg  used on input line 186.
 (pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
 
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 169--170
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 186--187
 [][] 
  []
 
@@ -424,15 +415,15 @@ Overfull \hbox (21.31163pt too wide) in paragraph at lines 169--170
 <./images/Dendrogramma.jpg, id=50, 722.7pt x 698.61pt>
 File: ./images/Dendrogramma.jpg Graphic file (type jpg)
 <use ./images/Dendrogramma.jpg>
-Package pdftex.def Info: ./images/Dendrogramma.jpg  used on input line 184.
+Package pdftex.def Info: ./images/Dendrogramma.jpg  used on input line 201.
 (pdftex.def)             Requested size: 361.3491pt x 349.30414pt.
 
-Overfull \hbox (31.3491pt too wide) in paragraph at lines 184--185
+Overfull \hbox (31.3491pt too wide) in paragraph at lines 201--202
 [][] 
  []
 
 [12 <./images/Robustness.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 191--193
+Underfull \hbox (badness 10000) in paragraph at lines 208--210
 
  []
 
@@ -440,117 +431,172 @@ Underfull \hbox (badness 10000) in paragraph at lines 191--193
 <./images/disc_graph.jpg, id=58, 702.625pt x 526.96875pt>
 File: ./images/disc_graph.jpg Graphic file (type jpg)
 <use ./images/disc_graph.jpg>
-Package pdftex.def Info: ./images/disc_graph.jpg  used on input line 205.
+Package pdftex.def Info: ./images/disc_graph.jpg  used on input line 222.
 (pdftex.def)             Requested size: 351.31163pt x 263.48372pt.
 
-Overfull \hbox (21.31163pt too wide) in paragraph at lines 205--206
+Overfull \hbox (21.31163pt too wide) in paragraph at lines 222--223
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 211--213
+Underfull \hbox (badness 10000) in paragraph at lines 228--230
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--218
+Underfull \hbox (badness 10000) in paragraph at lines 233--235
 
  []
 
 [14 <./images/disc_graph.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 219--221
+Underfull \hbox (badness 10000) in paragraph at lines 236--238
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 226--228
+Underfull \hbox (badness 10000) in paragraph at lines 243--245
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--231
+Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
 <./images/sihlouette.jpg, id=62, 733.74126pt x 526.96875pt>
 File: ./images/sihlouette.jpg Graphic file (type jpg)
 <use ./images/sihlouette.jpg>
-Package pdftex.def Info: ./images/sihlouette.jpg  used on input line 236.
+Package pdftex.def Info: ./images/sihlouette.jpg  used on input line 253.
 (pdftex.def)             Requested size: 366.86974pt x 263.48372pt.
 
-Overfull \hbox (36.86974pt too wide) in paragraph at lines 236--237
+Overfull \hbox (36.86974pt too wide) in paragraph at lines 253--254
 [][] 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 242--244
+Underfull \hbox (badness 10000) in paragraph at lines 259--261
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 245--248
+Underfull \hbox (badness 10000) in paragraph at lines 262--265
 
  []
 
 [16 <./images/sihlouette.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 271--274
+Underfull \hbox (badness 10000) in paragraph at lines 278--280
 
  []
 
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 281--283
+<./images/Pagerank.jpg, id=75, 578.76225pt x 418.56375pt>
+File: ./images/Pagerank.jpg Graphic file (type jpg)
+<use ./images/Pagerank.jpg>
+Package pdftex.def Info: ./images/Pagerank.jpg  used on input line 281.
+(pdftex.def)             Requested size: 289.38042pt x 209.28136pt.
+[17 <./images/Pagerank.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 287--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--286
+Underfull \hbox (badness 10000) in paragraph at lines 290--292
 
  []
 
-<./images/communicability.jpg, id=79, 689.57625pt x 419.76825pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 293--295
+
+ []
+
+<./images/PageRank_ideas.jpg, id=79, 240.9pt x 423.38174pt>
+File: ./images/PageRank_ideas.jpg Graphic file (type jpg)
+<use ./images/PageRank_ideas.jpg>
+Package pdftex.def Info: ./images/PageRank_ideas.jpg  used on input line 297.
+(pdftex.def)             Requested size: 120.44969pt x 211.69035pt.
+<./images/PageRank_ideas_left.jpg, id=80, 243.309pt x 425.79076pt>
+File: ./images/PageRank_ideas_left.jpg Graphic file (type jpg)
+<use ./images/PageRank_ideas_left.jpg>
+Package pdftex.def Info: ./images/PageRank_ideas_left.jpg  used on input line 3
+05.
+(pdftex.def)             Requested size: 121.6542pt x 212.89485pt.
+[18 <./images/PageRank_ideas.jpg>]
+<./images/PageRank_ideas_right.jpg, id=84, 242.1045pt x 424.58624pt>
+File: ./images/PageRank_ideas_right.jpg Graphic file (type jpg)
+<use ./images/PageRank_ideas_right.jpg>
+Package pdftex.def Info: ./images/PageRank_ideas_right.jpg  used on input line 
+313.
+(pdftex.def)             Requested size: 121.05196pt x 212.2926pt.
+<./images/PageRank_ideas_center.jpg, id=85, 349.90726pt x 364.36125pt>
+File: ./images/PageRank_ideas_center.jpg Graphic file (type jpg)
+<use ./images/PageRank_ideas_center.jpg>
+Package pdftex.def Info: ./images/PageRank_ideas_center.jpg  used on input line
+ 322.
+(pdftex.def)             Requested size: 174.95319pt x 182.18018pt.
+ [19 <./images/PageRank_ideas_left.jpg> <./images/PageRank_ideas_right.jpg>] [2
+0 <./images/PageRank_ideas_center.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 346--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 358--360
+
+ []
+
+<./images/communicability.jpg, id=94, 689.57625pt x 419.76825pt>
 File: ./images/communicability.jpg Graphic file (type jpg)
 <use ./images/communicability.jpg>
-Package pdftex.def Info: ./images/communicability.jpg  used on input line 287.
+Package pdftex.def Info: ./images/communicability.jpg  used on input line 361.
 (pdftex.def)             Requested size: 413.74893pt x 251.86288pt.
 
-Overfull \hbox (83.74893pt too wide) in paragraph at lines 287--288
+Overfull \hbox (83.74893pt too wide) in paragraph at lines 361--362
 [][] 
  []
 
-[18 <./images/communicability.jpg>] [19] (Report_net.aux) ) 
+[21 <./images/communicability.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 367--373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--382
+
+ []
+
+[22] (Report_net.aux) ) 
 Here is how much of TeX's memory you used:
- 2965 strings out of 492970
- 45376 string characters out of 3123929
- 106376 words of memory out of 3000000
- 6794 multiletter control sequences out of 15000+200000
+ 2990 strings out of 492970
+ 46161 string characters out of 3123929
+ 106361 words of memory out of 3000000
+ 6814 multiletter control sequences out of 15000+200000
  44419 words of font info for 39 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,32p,1145b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/luigimissr
-i/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/
-luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}
-{C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-r
-m.enc}{C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/l
-m/lm-mathit.enc}<C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/lm/lmbx12.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/lm/lmex10.pfb><C:/Users/luigimissri/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Users/luigimissri/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi5.pfb><C:/Users/luigimissri/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Users/luigi
-missri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Us
-ers/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.p
-fb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/l
-m/lmr17.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
-/public/lm/lmr5.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fon
-ts/type1/public/lm/lmr7.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Users/luigimissri/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb><C:/Users/luigimissri/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/luigimissri/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy5.pfb><C:/Users/luig
-imissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb>
-Output written on Report_net.pdf (19 pages, 1336163 bytes).
+ 41i,6n,32p,1145b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/
+fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/luigimissri/AppData/Local/Programs/M
+iKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/luigimissri/AppData/Local/
+Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/luigimissri/AppData/
+Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}<C:/Users/luigimissr
+i/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Users/
+luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb>
+<C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/l
+mmi10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/lm/lmmi5.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/lm/lmmi7.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX
+ 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/luigimissri/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/luigimissri/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Users/luigimissri/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr5.pfb><C:/Users/luigim
+issri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/User
+s/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb>
+<C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/l
+mri10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/lm/lmsy10.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/lm/lmsy5.pfb><C:/Users/luigimissri/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/lm/lmsy7.pfb>
+Output written on Report_net.pdf (22 pages, 1720189 bytes).
 PDF statistics:
- 138 PDF objects out of 1000 (max. 8388607)
+ 152 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 
