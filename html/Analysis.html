@@ -1,0 +1,1425 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Analysis</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-01-30"><meta name="DC.source" content="Analysis.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">pre-processing</a></li><li><a href="#3">%%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#4">%%%%%%%%%%%%%%%%% MOMENTS OF DEGREE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#5">%%%%%%%%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#6">%%%%%%%%%%%%%%%%% PURE ML FITTING %%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#7">%%%%%%%%%%%%%%%%% ML FITTING WITH SATURATION %%%%%%%%%%%%%%%%%%</a></li><li><a href="#8">%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#9">%%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY %%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#10">%%%%%%%%%%%%%%%%% SHOW RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#11">%%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 1 %%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#12">%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 2 %%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#13">CLUSTRING COEFFICIENT PROB. DISTRIBUTION</a></li><li><a href="#14">%%%%%%%%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#15">Inhomogeneity Ratio:</a></li><li><a href="#16">Robustness for Random Attack failure</a></li><li><a href="#17">Robustness for Attacks (Adversary which removes all hubs first)</a></li><li><a href="#18">%%%%%%%%%%%%%%%%% Community Detection %%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#19">%%%%%%%%%%%%%%%%%%%%%%% spectral approach %%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#20">%%%%%%%%%%%%%%%%%%%%%%%%% Kmean Approach %%%%%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#21">%%%%%%%%%%%%%% Sovrapposition clustering and manual communities</a></li><li><a href="#22">%%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%%</a></li><li><a href="#23">Community identified by connected components in our disconnected graph</a></li><li><a href="#24">Clustering on biggest connected component%%</a></li><li><a href="#25">spectral approach on part_A</a></li><li><a href="#26">%%%%%%%%%%%%%%% PageRank-nibble approach for the biggest component %%%%</a></li><li><a href="#27">Page rank</a></li><li><a href="#28">%%%%%%%%%%%%%%%%%%%% Show page rank results %%%%%%%%%%%%%%%%%%%%%%%</a></li><li><a href="#29">Using the function fun_kryl.m compute the total comunicability of every node</a></li><li><a href="#30">%%%%%%%%%%%%%%%%%% show result total comunicability %%%%%%%%%%%%%%%%%%</a></li></ul></div><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+clc
+
+<span class="comment">% IMPORT &amp; Polishing Data%</span>
+G = csvread(<span class="string">'Adj.csv'</span>,1,1);
+
+party_name = readtable(<span class="string">"party_name.csv"</span>);
+party_name = party_name(:,2);
+
+ideas_name = readtable(<span class="string">"Ideas_name.csv"</span>);
+ideas_name = ideas_name(:,2);
+
+full_name = vertcat(party_name,ideas_name);
+
+N = max(size(G));
+A = sparse(G);
+clear <span class="string">G</span>;
+</pre><h2 id="2">pre-processing</h2><pre class="codeinput">Au = 1*(A+A'&gt;0);                    <span class="comment">% undirected network</span>
+Au = Au - diag(diag(Au));           <span class="comment">% clear diagonal (you never know)</span>
+
+<span class="comment">% Remove nodes which are NOT connected</span>
+pos = find(sum(Au)~=0);
+A = A(pos,pos);
+Au = Au(pos,pos);
+full_name = full_name(pos,1);
+spy(Au);
+</pre><img vspace="5" hspace="5" src="Analysis_01.png" alt=""> <h2 id="3">%%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="comment">% Distribution</span>
+N = size(A,1);              <span class="comment">% Number of Nodes</span>
+ display(<span class="string">"Number of Nodes= "</span>+N)
+d = full(sum(A));           <span class="comment">% Degree Vector</span>
+<span class="comment">%d = d(d&gt;0);                % avoid zero degrees</span>
+Links_num = sum(d);         <span class="comment">% Total number of links --G (Let's decide if #node is this or we want to divide by 2)</span>
+ display(<span class="string">"Total number of links= "</span>+Links_num)
+
+k = unique(d);              <span class="comment">% Degree Samples</span>
+pk = histc(d,k)';           <span class="comment">% counts occurrences</span>
+pk = pk/sum(pk);            <span class="comment">% normalize to 1</span>
+
+<span class="comment">% Cumulative distribution</span>
+Pk = cumsum(pk,<span class="string">'reverse'</span>);
+
+<span class="comment">% Log Binning</span>
+klog = 10.^(0:0.1:ceil(log10(max(k))));
+pklog = histc(d,klog)';     <span class="comment">% counts occurrences</span>
+pklog = pklog/sum(pklog);   <span class="comment">% normalize to 1</span>
+</pre><pre class="codeoutput">    "Number of Nodes= 656"
+
+    "Total number of links= 18778"
+
+</pre><h2 id="4">%%%%%%%%%%%%%%%%% MOMENTS OF DEGREE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">Mean_D = mean(d);           <span class="comment">% First Moment of prob. distribution</span>
+display(<span class="string">"First Moment of prob. distribution= "</span>+Mean_D)
+
+Var_D = var(d);             <span class="comment">% Second Moment of Prob. distribution (Express the spread)</span>
+display(<span class="string">"Second Moment of Prob. distribution= "</span>+Var_D)
+
+Skew_D = skewness(d);       <span class="comment">% Third Moment of Prob. distribution (How symmetric around average)</span>
+display(<span class="string">"Third Moment of Prob. distribution= "</span>+Skew_D)
+</pre><pre class="codeoutput">    "First Moment of prob. distribution= 28.625"
+
+    "Second Moment of Prob. distribution= 1500.079"
+
+    "Third Moment of Prob. distribution= 1.7576"
+
+</pre><h2 id="5">%%%%%%%%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">figure(2)
+subplot(2,2,1)
+plot(k,pk,<span class="string">'.'</span>)
+grid
+xlabel(<span class="string">'k'</span>)
+ylabel(<span class="string">'PDF'</span>)
+title(<span class="string">'linear PDF plot'</span>)
+subplot(2,2,2)
+loglog(k,pk,<span class="string">'.'</span>)
+grid
+xlabel(<span class="string">'k'</span>)
+ylabel(<span class="string">'PDF'</span>)
+title(<span class="string">'logarithmic PDF plot'</span>)
+subplot(2,2,3)
+loglog(klog,pklog,<span class="string">'.'</span>)
+grid
+xlabel(<span class="string">'k'</span>)
+ylabel(<span class="string">'PDF'</span>)
+title(<span class="string">'logarithmic PDF plot (log bins)'</span>)
+subplot(2,2,4)
+loglog(k,Pk,<span class="string">'.'</span>)
+grid
+xlabel(<span class="string">'k'</span>)
+ylabel(<span class="string">'CCDF'</span>)
+title(<span class="string">'logarithmic CCDF plot'</span>)
+</pre><img vspace="5" hspace="5" src="Analysis_02.png" alt=""> <h2 id="6">%%%%%%%%%%%%%%%%% PURE ML FITTING %%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">kmin = 40;
+d2 = d(d&gt;=kmin);                 <span class="comment">% restrict range</span>
+ga = 1+1/mean(log(d2/kmin));     <span class="comment">% estimate the exponent</span>
+disp([<span class="string">'gamma ML = '</span> num2str(ga)])
+</pre><pre class="codeoutput">gamma ML = 2.5565
+</pre><h2 id="7">%%%%%%%%%%%%%%%%% ML FITTING WITH SATURATION %%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">d1=d(d&gt;30);
+<span class="keyword">for</span> ks = 1:max(k)
+    kmin = min(d1);
+    tmp = mean(log((d1+ks)/(kmin+ks)));
+    ga2(ks) = 1+1/tmp;
+    de(ks) = log(ga2(ks)-1)-log(kmin+ks)-ga2(ks)*tmp;
+<span class="keyword">end</span>
+[~,ks] = max(de);
+disp([<span class="string">'k_sat ML sat = '</span> num2str(ks)])
+disp([<span class="string">'gamma ML sat = '</span> num2str(ga2(ks))])
+</pre><pre class="codeoutput">k_sat ML sat = 185
+gamma ML sat = 6.6197
+</pre><h2 id="8">%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">figure(5)
+<span class="comment">% data</span>
+loglog(k,Pk,<span class="string">'.'</span>)
+hold <span class="string">on</span>
+<span class="comment">% ML fitting (we make sure that the plot follows the data)</span>
+s1 = k.^(1-ga); <span class="comment">% build the CCDF signal</span>
+loglog(k,s1/s1(40)*Pk(40));
+<span class="comment">% ML fitting with saturation</span>
+s1 = ((k+ks)/(kmin+ks)).^(1-ga2(ks));
+loglog(k,s1*exp(-1.2))
+hold <span class="string">off</span>
+axis([xlim min(Pk/2) 2])
+grid
+xlabel(<span class="string">'k'</span>)
+ylabel(<span class="string">'CCDF'</span>)
+title(<span class="string">'ML fittings'</span>)
+legend(<span class="string">'data'</span>,<span class="string">'ML'</span>,<span class="string">'ML with sat.'</span>)
+</pre><img vspace="5" hspace="5" src="Analysis_03.png" alt=""> <h2 id="9">%%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY %%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">k_tmp = (A*d')./d'; <span class="comment">% the average degree of neighbours</span>
+
+<span class="comment">% extract averages for each value of k</span>
+u = unique(d');
+<span class="keyword">for</span> k = 1:length(u)
+    k_nn(k) = mean(k_tmp(d'==u(k)));
+<span class="keyword">end</span>
+
+<span class="comment">% do the linear fitting</span>
+p = polyfit(log(u'),log(k_nn),1);
+disp([<span class="string">'Assortativity factor ='</span> num2str(p(1))])          <span class="comment">%Assortativity factor</span>
+</pre><pre class="codeoutput">Assortativity factor =0.18504
+</pre><h2 id="10">%%%%%%%%%%%%%%%%% SHOW RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">figure(6)
+loglog(d,k_tmp,<span class="string">'g.'</span>);
+hold <span class="string">on</span>
+loglog(u,exp(p(2)+log(u)*p(1)),<span class="string">'r-'</span>);
+loglog(u,k_nn,<span class="string">'k.'</span>);
+hold <span class="string">off</span>
+grid
+xlabel(<span class="string">'k'</span>)
+ylabel(<span class="string">'k_{nn}'</span>)
+title(<span class="string">'Assortativity of the Collaboration Network'</span>)
+</pre><img vspace="5" hspace="5" src="Analysis_04.png" alt=""> <h2 id="11">%%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 1 %%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%Clustring Coefficient: Measure density of links in the neighbourhood</span>
+
+cn = diag(full((Au*triu(Au)*Au)));          <span class="comment">% Number of triangles for each node</span>
+Ei = zeros(size(d));
+Ei = cn(d&gt;1).';                             <span class="comment">% Number of edges between nodes of neighbourhood</span>
+<span class="comment">%E_Max = 0.5*d(d&gt;1).*(d(d&gt;1)-1);             % Maximum Number of Edges (Pairs)</span>
+C1 = 2*Ei./d(d&gt;1)./(d(d&gt;1)-1);                              <span class="comment">% Clustring Coefficient</span>
+<span class="comment">%C1 = C1(C1&gt;0);</span>
+Cave1 = sum(C1)/N;
+</pre><h2 id="12">%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 2 %%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="keyword">for</span> i=1:length(Au)
+  str(i).child = find(Au(i,:)&gt;0);
+<span class="keyword">end</span>
+N = length(Au);
+deg = sum(Au(:,:));
+
+<span class="comment">% find neighboring links</span>
+
+<span class="keyword">for</span> i=1:N
+    adjn = Au(str(i).child,str(i).child);
+    E(i) = sum(sum(adjn))/2;
+    <span class="keyword">if</span> deg(i)==1 | deg(i)==0
+        C(i) = 0;
+    <span class="keyword">else</span>
+        C(i) = 2*E(i)/deg(i)/(deg(i)-1);
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+<span class="comment">%C = C(C&gt;0);</span>
+C = full(C);
+Cave2 = sum(C)/N;
+ disp([<span class="string">'Average Clustering Coefficient = '</span> num2str(Cave2)])
+</pre><pre class="codeoutput">Average Clustering Coefficient = 0.44409
+</pre><h2 id="13">CLUSTRING COEFFICIENT PROB. DISTRIBUTION</h2><pre class="codeinput">s = unique(C);                              <span class="comment">% Unique Occurrences</span>
+<span class="comment">%k = unique(d);</span>
+Cpk = histc(C,s)';                          <span class="comment">% counts occurrences</span>
+Cpk = Cpk/sum(Cpk);                         <span class="comment">% normalize to 1</span>
+
+<span class="comment">% Cumulative distribution</span>
+CPk = cumsum(Cpk,<span class="string">'reverse'</span>);
+figure(7);
+plot(s,CPk,<span class="string">'+'</span>);
+xline(Cave2,<span class="string">'r--'</span>,{<span class="string">'Average Clustring Coefficient'</span>});
+grid
+xlabel(<span class="string">'Clustrring Coefficient'</span>)
+ylabel(<span class="string">'CCDF'</span>)
+title(<span class="string">'Clustring Coefficient CCDF'</span>)
+</pre><img vspace="5" hspace="5" src="Analysis_05.png" alt=""> <h2 id="14">%%%%%%%%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%Robustness: if you knock out x% of nodes/edges, how many % survive ?</span>
+</pre><h2 id="15">Inhomogeneity Ratio:</h2><pre class="codeinput">inhom_Ratio = mean(d.^2)./mean(d);
+disp([<span class="string">'The Inhomogeneity Ratio = '</span> num2str(inhom_Ratio)])
+</pre><h2 id="16">Robustness for Random Attack failure</h2><pre class="codeinput">Au_update = Au;
+Rand_inhom_Ratio = mean(d.^2) ./ mean(d);
+
+<span class="keyword">for</span> i = 1:N-1
+    j = ceil((N-i)*rand)+1;
+    Au_update(:,j) = [];
+    Au_update(j,:) = [];
+    d_update = full(sum(Au_update));
+
+    mom2_k = mean(d_update.^2);
+    mom1_k = mean(d_update);
+
+    Rand_inhom_Ratio_update = mom2_k ./mom1_k;
+    Rand_inhom_Ratio = [Rand_inhom_Ratio Rand_inhom_Ratio_update];
+<span class="keyword">end</span>
+</pre><h2 id="17">Robustness for Attacks (Adversary which removes all hubs first)</h2><pre class="codeinput">Au_update = Au;
+Attack_inhom_Ratio = mean(d.^2) ./ mean(d);
+
+<span class="keyword">for</span> i = 1:N-1
+    [hub_degree,hub_index] = max(d_update);
+    j = hub_index;
+    Au_update(:,j) = [];
+    Au_update(j,:) = [];
+    d_update = full(sum(Au_update));
+
+    mom2_k = mean(d_update.^2);
+    mom1_k = mean(d_update);
+
+    Attack_inhom_Ratio_update = mom2_k ./mom1_k;
+    Attack_inhom_Ratio = [Attack_inhom_Ratio Attack_inhom_Ratio_update];
+<span class="keyword">end</span>
+
+<span class="comment">% Showing the results (with Molly-Reed criteria)</span>
+
+figure(8);
+loglog(Rand_inhom_Ratio,<span class="string">'-.'</span>);
+hold <span class="string">on</span>
+loglog(Attack_inhom_Ratio,<span class="string">'g-.'</span>);
+hline = refline([0 2]);
+hline.Color = <span class="string">'r'</span>;
+hline.LineWidth = 1;
+hold <span class="string">off</span>
+grid;
+legend(<span class="string">'Random failure'</span>,<span class="string">'Attacks'</span>,<span class="string">'Molly-Reed criteria'</span>);
+xlabel(<span class="string">'k'</span>);
+ylabel(<span class="string">'&lt;K^2&gt; / &lt;K&gt; '</span>);
+title(<span class="string">'Robustness'</span>);
+</pre><pre class="codeoutput">The Inhomogeneity Ratio = 80.9496
+</pre><img vspace="5" hspace="5" src="Analysis_06.png" alt=""> <h2 id="18">%%%%%%%%%%%%%%%%% Community Detection %%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+G = csvread(<span class="string">'gauss_Adj.csv'</span>,1,1);
+N = max(size(G));
+B = sparse(G);
+clear <span class="string">G</span>;
+
+Bu = 1*(B+B'&gt;0);                    <span class="comment">% undirected network</span>
+Bu = Bu - diag(diag(Bu));           <span class="comment">% clear diagonal (you never know)</span>
+
+<span class="comment">% remove nodes which are NOT connected</span>
+pos = find(sum(Bu)~=0);
+B = B(pos,pos);
+Bu = Bu(pos,pos);
+N = size(Bu,1);
+
+<span class="comment">% Laplacian Matrix generation</span>
+d = full(sum(Bu));                   <span class="comment">% degree vector</span>
+D = sum(d);                          <span class="comment">% degrees sum</span>
+I = spdiags(ones(N,1),0,N,N);        <span class="comment">% identity matrix</span>
+Di = spdiags(1./sqrt(d'),0,N,N);     <span class="comment">% diagonal degrees square-rooted</span>
+L = I - Di*Bu*Di;                    <span class="comment">% normalized Laplacian</span>
+M = Bu*Di*Di;                        <span class="comment">% normalized adjacancy matrix</span>
+</pre><h2 id="19">%%%%%%%%%%%%%%%%%%%%%%% spectral approach %%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="comment">% extract eigenvectors</span>
+[V,DD] = eigs(L,6,<span class="string">'SA'</span>);
+Vv = Di*V;                          <span class="comment">% normalize eigenvectors</span>
+v1 = Vv(:,2)/norm(Vv(:,2));         <span class="comment">% Fiedler's vector</span>
+<span class="comment">% sweep wrt the ordering identified by v1</span>
+<span class="comment">% reorder the adjacency matrix</span>
+[v1s,pos] = sort(v1,<span class="string">'descend'</span>);
+Bu1 = Bu(pos,pos);
+<span class="comment">% evaluate the conductance measure</span>
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:end-1);
+<span class="comment">% identify the minimum -&gt; threshold</span>
+[~,mpos] = min(conduct);
+threshold = mean(v1s(mpos:mpos+1));
+disp([<span class="string">' '</span>])
+disp(<span class="string">'spectral approach'</span>)
+disp([<span class="string">'   Minimum conductance: '</span> num2str(conduct(mpos))])
+disp([<span class="string">'   Cheeger''s upper bound: '</span> num2str(sqrt(2*DD(2,2)))])
+disp([<span class="string">'   # of links: '</span> num2str(D/2)])
+disp([<span class="string">'   Cut value: '</span> num2str(cut(mpos))])
+disp([<span class="string">'   Assoc value: '</span> num2str(assoc(mpos))])
+disp([<span class="string">'   Community size #1: '</span> num2str(mpos)])
+disp([<span class="string">'   Community size #2: '</span> num2str(N-mpos)])
+disp([<span class="string">' '</span>])
+</pre><pre class="codeoutput"> 
+spectral approach
+   Minimum conductance: 0.50045
+   Cheeger's upper bound: 1.4148
+   # of links: 619941
+   Cut value: 310249
+   Assoc value: 619941
+   Community size #1: 557
+   Community size #2: 557
+ 
+</pre><h2 id="20">%%%%%%%%%%%%%%%%%%%%%%%%% Kmean Approach %%%%%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">LRC = kmeans(V(:,1:3),3);
+disp([<span class="string">' '</span>])
+disp(<span class="string">'Kmean approach'</span>)
+disp(<span class="string">"  Community size #1: "</span>+sum(LRC == 1))
+disp(<span class="string">"  Community size #2: "</span>+sum(LRC == 2))
+disp(<span class="string">"  Community size #3: "</span>+sum(LRC == 3))
+silhouette(V(:,1:3),LRC)
+</pre><pre class="codeoutput"> 
+Kmean approach
+  Community size #1: 278
+  Community size #2: 773
+  Community size #3: 63
+</pre><img vspace="5" hspace="5" src="Analysis_07.png" alt=""> <h2 id="21">%%%%%%%%%%%%%% Sovrapposition clustering and manual communities</h2><pre class="codeinput">comt = readtable(<span class="string">"community_truth.csv"</span>);
+comt = table2array(comt(:,2));
+err=0;
+
+<span class="comment">%suppose we assign 1 to left, 2 to center and 3 to right</span>
+
+<span class="keyword">for</span> i = 1:length(LRC)
+    <span class="keyword">if</span> comt(i)~=LRC(i)
+        err=err+1;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+disp(<span class="string">"Sovrapposition cluster and manually computed communities="</span> + (1-err/length(LRC)))
+</pre><pre class="codeoutput">Sovrapposition cluster and manually computed communities=0.1912
+</pre><h2 id="22">%%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%%</h2><pre class="codeinput"><span class="keyword">if</span> mpos&lt;N-mpos              <span class="comment">% select seed node from the smaller group</span>
+    i = pos(1);             <span class="comment">% we select the more relevant from the perspective of the spectral approach</span>
+<span class="keyword">else</span>
+    i = pos(end);
+<span class="keyword">end</span>
+q = zeros(N,1);
+q(i) = 1;                   <span class="comment">% teleport vector</span>
+c = 0.85;
+r = (I-c*M)\((1-c)*q);      <span class="comment">% ranking vector</span>
+ep = 1e-3;                  <span class="comment">% precision</span>
+
+<span class="comment">% run PageRank-nibble</span>
+u = zeros(N,1);             <span class="comment">% starting point</span>
+v = q;                      <span class="comment">% starting point</span>
+th = full(ep*d/D)';         <span class="comment">% thresholds</span>
+count = 0;                  <span class="comment">% exit counter</span>
+complexity = 0;             <span class="comment">% complexity value (# of operations)</span>
+ii = i;                     <span class="comment">% starting index used for Push operation</span>
+<span class="keyword">while</span> (count&lt;N)
+    <span class="keyword">if</span> v(ii)&gt;th(ii)         <span class="comment">% push if above threshold</span>
+        tmp = v(ii);
+        u(ii) = u(ii)+(1-c)*tmp;
+        v(ii) = 0;
+        v = v + c*M(:,ii)*tmp;
+        complexity = complexity + d(ii); <span class="comment">% update complexity</span>
+        count = 0;          <span class="comment">% reset the exit counter</span>
+    <span class="keyword">else</span>                    <span class="comment">% go to next entry if below threshold</span>
+        count = count + 1;  <span class="comment">% increase the exit counter</span>
+        ii = mod(ii,N)+1;   <span class="comment">% update the index used for Push</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% sweep wrt the ordering identified by v1</span>
+<span class="comment">% reorder the adjacency matrix</span>
+[u1s,pos2] = sort(u,<span class="string">'descend'</span>);
+Nmax = find(u1s&gt;0,1,<span class="string">'last'</span>); <span class="comment">% discard nodes with 0 values (never used in Push)</span>
+Bu1 = Bu(pos2,pos2(1:Nmax));
+<span class="comment">% evaluate the conductance measure</span>
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:Nmax-1);
+<span class="comment">% identify the minimum -&gt; threshold</span>
+[~,mpos2] = min(conduct);
+threshold2 = mean(u1s(mpos2:mpos2+1));
+disp(<span class="string">'PageRank-nibble approach'</span>)
+disp([<span class="string">'   complexity/D: '</span> num2str((complexity/D))])
+disp([<span class="string">'   epsilon: '</span> num2str(ep)])
+disp([<span class="string">'   prec: '</span> num2str(norm(r-u,1))])
+disp([<span class="string">'   Minimum conductance: '</span> num2str(conduct(mpos2))])
+disp([<span class="string">'   # of links: '</span> num2str(D/2)])
+disp([<span class="string">'   Cut value: '</span> num2str(cut(mpos2))])
+disp([<span class="string">'   Assoc value: '</span> num2str(assoc(mpos2))])
+disp([<span class="string">'   Community size #1: '</span> num2str(mpos2)])
+disp([<span class="string">'   Community size #2: '</span> num2str(N-mpos2)])
+
+<span class="comment">% show sweep choice</span>
+figure(9)
+plot(conduct)
+grid
+ylabel(<span class="string">'conductance'</span>)
+title(<span class="string">'sweep choice'</span>)
+
+<span class="comment">% show network with partition</span>
+figure(10)
+plot(u,v1,<span class="string">'k.'</span>)
+hold <span class="string">on</span>
+<span class="comment">% plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')</span>
+plot(threshold2*[1,1],ylim,<span class="string">'g-'</span>)
+plot(xlim,threshold*[1,1],<span class="string">'r-'</span>)
+hold <span class="string">off</span>
+grid
+ylabel(<span class="string">'Fiedler''s eigenvector value'</span>)
+xlabel(<span class="string">'PageRank value'</span>)
+title(<span class="string">'communities'</span>)
+</pre><pre class="codeoutput">PageRank-nibble approach
+   complexity/D: 23.8384
+   epsilon: 0.001
+   prec: 0.00047369
+   Minimum conductance: 0.50045
+   # of links: 619941
+   Cut value: 310249
+   Assoc value: 619941
+   Community size #1: 557
+   Community size #2: 557
+</pre><img vspace="5" hspace="5" src="Analysis_08.png" alt=""> <img vspace="5" hspace="5" src="Analysis_09.png" alt=""> <h2 id="23">Community identified by connected components in our disconnected graph</h2><pre class="codeinput">G = graph(Au);
+[bins,binsizes] = conncomp(G);
+mask=(bins==1);
+figure(11);
+plot(G)
+part_A=Au(mask,mask);
+</pre><img vspace="5" hspace="5" src="Analysis_10.png" alt=""> <h2 id="24">Clustering on biggest connected component%%</h2><pre class="codeinput">N = size(part_A,1);
+d = full(sum(part_A)); <span class="comment">% degree vector</span>
+D = sum(d); <span class="comment">% degrees sum</span>
+I = spdiags(ones(N,1),0,N,N); <span class="comment">% identity matrix</span>
+Di = spdiags(1./sqrt(d'),0,N,N); <span class="comment">% diagonal degrees square-rooted</span>
+L = I - Di*part_A*Di; <span class="comment">% normalized Laplacian</span>
+M = part_A*Di*Di; <span class="comment">% normalized adjacancy matrix</span>
+</pre><h2 id="25">spectral approach on part_A</h2><pre class="codeinput"><span class="comment">% extract eigenvectors</span>
+[V,DD] = eigs(L,6,<span class="string">'SA'</span>);
+Vv = Di*V; <span class="comment">% normalize eigenvectors</span>
+v1 = Vv(:,2)/norm(Vv(:,2)); <span class="comment">% Fiedler's vector</span>
+<span class="comment">% sweep wrt the ordering identified by v1</span>
+<span class="comment">% reorder the adjacency matrix</span>
+[v1s,pos] = sort(v1,<span class="string">'descend'</span>);
+Au1 = part_A(pos,pos);
+<span class="comment">% evaluate the conductance measure</span>
+a = sum(triu(Au1));
+b = sum(tril(Au1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:end-1);
+<span class="comment">% show the conductance measure</span>
+figure(12)
+plot(conduct,<span class="string">'x-'</span>)
+grid
+title(<span class="string">'conductance'</span>)
+<span class="comment">% identify the minimum -&gt; threshold</span>
+[~,mpos] = min(conduct);
+threshold = mean(v1s(mpos:mpos+1));
+disp([<span class="string">' '</span>])
+disp(<span class="string">'spectral approach'</span>)
+disp([<span class="string">'   Minimum conductance: '</span> num2str(conduct(mpos))])
+disp([<span class="string">'   Cheeger''s upper bound: '</span> num2str(sqrt(2*DD(2,2)))])
+disp([<span class="string">'   # of links: '</span> num2str(D/2)])
+disp([<span class="string">'   Cut value: '</span> num2str(cut(mpos))])
+disp([<span class="string">'   Assoc value: '</span> num2str(assoc(mpos))])
+disp([<span class="string">'   Community size #1: '</span> num2str(mpos)])
+disp([<span class="string">'   Community size #2: '</span> num2str(N-mpos)])
+disp([<span class="string">' '</span>])
+
+<span class="comment">% community identified by sign of v1</span>
+
+disp(<span class="string">'spectral approach'</span>)
+disp(<span class="string">"based only on sign of Fiedler's vector"</span>)
+disp([<span class="string">'   Community size #1: '</span> num2str( sum(v1&gt;0))])
+disp([<span class="string">'   Community size #2: '</span> num2str(sum(v1&lt;0))])
+disp([<span class="string">' '</span>])
+</pre><pre class="codeoutput"> 
+spectral approach
+   Minimum conductance: 0.11111
+   Cheeger's upper bound: 0.32749
+   # of links: 9356
+   Cut value: 1
+   Assoc value: 9
+   Community size #1: 5
+   Community size #2: 597
+ 
+spectral approach
+based only on sign of Fiedler's vector
+   Community size #1: 47
+   Community size #2: 555
+ 
+</pre><img vspace="5" hspace="5" src="Analysis_11.png" alt=""> <h2 id="26">%%%%%%%%%%%%%%% PageRank-nibble approach for the biggest component %%%%</h2><pre class="codeinput"><span class="keyword">if</span> mpos&lt;N-mpos  <span class="comment">% select seed node from the smaller group</span>
+    i = pos(1); <span class="comment">% we select the more relevant from the perspective of the spectral approach</span>
+<span class="keyword">else</span>
+    i = pos(end);
+<span class="keyword">end</span>
+q = zeros(N,1);
+q(i) = 1; <span class="comment">% teleport vector</span>
+c = 0.85;
+r = (I-c*M)\((1-c)*q); <span class="comment">% ranking vector</span>
+ep = 1e-3; <span class="comment">% precision</span>
+
+<span class="comment">% run PageRank-nibble</span>
+u = zeros(N,1); <span class="comment">% starting point</span>
+v = q; <span class="comment">% starting point</span>
+th = full(ep*d/D)'; <span class="comment">% thresholds</span>
+count = 0; <span class="comment">% exit counter</span>
+complexity = 0; <span class="comment">% complexity value (# of operations)</span>
+ii = i; <span class="comment">% starting index used for Push operation</span>
+<span class="keyword">while</span> (count&lt;N)
+    <span class="keyword">if</span> v(ii)&gt;th(ii) <span class="comment">% push if above threshold</span>
+        tmp = v(ii);
+        u(ii) = u(ii)+(1-c)*tmp;
+        v(ii) = 0;
+        v = v + c*M(:,ii)*tmp;
+        complexity = complexity + d(ii); <span class="comment">% update complexity</span>
+        count = 0; <span class="comment">% reset the exit counter</span>
+    <span class="keyword">else</span> <span class="comment">% go to next entry if below threshold</span>
+        count = count + 1; <span class="comment">% increase the exit counter</span>
+        ii = mod(ii,N)+1; <span class="comment">% update the index used for Push</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% sweep wrt the ordering identified by v1</span>
+<span class="comment">% reorder the adjacency matrix</span>
+[u1s,pos2] = sort(u,<span class="string">'descend'</span>);
+Nmax = find(u1s&gt;0,1,<span class="string">'last'</span>); <span class="comment">% discard nodes with 0 values (never used in Push)</span>
+Bu1 = Bu(pos2,pos2(1:Nmax));
+<span class="comment">% evaluate the conductance measure</span>
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:Nmax-1);
+<span class="comment">% identify the minimum -&gt; threshold</span>
+[~,mpos2] = min(conduct);
+threshold2 = mean(u1s(mpos2:mpos2+1));
+disp(<span class="string">'PageRank-nibble approach'</span>)
+disp([<span class="string">'   complexity/D: '</span> num2str((complexity/D))])
+disp([<span class="string">'   epsilon: '</span> num2str(ep)])
+disp([<span class="string">'   prec: '</span> num2str(norm(r-u,1))])
+disp([<span class="string">'   Minimum conductance: '</span> num2str(conduct(mpos2))])
+disp([<span class="string">'   # of links: '</span> num2str(D/2)])
+disp([<span class="string">'   Cut value: '</span> num2str(cut(mpos2))])
+disp([<span class="string">'   Assoc value: '</span> num2str(assoc(mpos2))])
+disp([<span class="string">'   Community size #1: '</span> num2str(mpos2)])
+disp([<span class="string">'   Community size #2: '</span> num2str(N-mpos2)])
+
+<span class="comment">% show sweep choice</span>
+figure(13)
+plot(conduct)
+grid
+ylabel(<span class="string">'conductance'</span>)
+title(<span class="string">'sweep choice'</span>)
+
+<span class="comment">% show network with partition</span>
+figure(14)
+plot(u,v1,<span class="string">'k.'</span>)
+hold <span class="string">on</span>
+<span class="comment">% plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')</span>
+plot(threshold2*[1,1],ylim,<span class="string">'g-'</span>)
+plot(xlim,threshold*[1,1],<span class="string">'r-'</span>)
+hold <span class="string">off</span>
+grid
+ylabel(<span class="string">'Fiedler''s eigenvector value'</span>)
+xlabel(<span class="string">'PageRank value'</span>)
+title(<span class="string">'communities'</span>)
+</pre><pre class="codeoutput">PageRank-nibble approach
+   complexity/D: 20.5076
+   epsilon: 0.001
+   prec: 0.00048918
+   Minimum conductance: -35.0769
+   # of links: 9356
+   Cut value: 18240
+   Assoc value: -520
+   Community size #1: 32
+   Community size #2: 570
+</pre><img vspace="5" hspace="5" src="Analysis_12.png" alt=""> <img vspace="5" hspace="5" src="Analysis_13.png" alt=""> <h2 id="27">Page rank</h2><pre class="codeinput">n=size(A,1);
+e=ones(n,1);
+oo=1./sum(A);
+oo(oo==Inf)=0;
+D=diag(oo);
+Ad=sparse(A*D);
+eAd=sparse(e'*Ad);
+check=1;
+iter=0;
+v=sparse((1/n).*ones(n,1));
+toll=1e-4;
+alpha=0.85;
+toll=0.0001;
+
+<span class="keyword">while</span> check&gt;toll
+    vold=v;
+    v=alpha*Ad*vold+1/n*(1-alpha*eAd*vold)*e ;
+    check=sum(abs(v-vold));
+    iter=iter+1;
+<span class="keyword">end</span>
+
+pr=v;
+</pre><h2 id="28">%%%%%%%%%%%%%%%%%%%% Show page rank results %%%%%%%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">[spr,per]=sort(pr,<span class="string">'descend'</span>);
+result = table;
+result.Parties_name=full_name(per,1);
+result.PageRank=spr;
+result.Degree = sum(A,2);
+
+result(1:25,:)
+</pre><pre class="codeoutput">
+ans =
+
+  25&times;3 table
+
+                                  Parties_name                                   PageRank     Degree
+                                        x                                                           
+    _________________________________________________________________________    _________    ______
+
+    'Social Democratic Party'                                                    0.0072297       2  
+    'Democratic Peasants&#8217; Party of Germany'                                      0.0071579      28  
+    'Human Shield'                                                               0.0064549      15  
+    'Latvian Farmers&#8217; Union'                                                     0.0064145      65  
+    'Geneva Citizens' Movement'                                                  0.0063279       1  
+    'Alliance of Free Democrats'                                                 0.0061446       7  
+    'Popular Unity'                                                              0.0060599      10  
+    'Portuguese Communist Party'                                                  0.005937       4  
+    'None-of-the-above'                                                          0.0059335      46  
+    'Homeland Union - Lithuanian Christian Democrats'                            0.0059093      65  
+    'Direction-Social Democracy'                                                 0.0058928      27  
+    'Alliance of the Christian Democratic People's Front'                        0.0058324      80  
+    'Radical Political Party'                                                    0.0057698       7  
+    'Blue Coalition'                                                             0.0057555      42  
+    'Key Coalition'                                                              0.0056872      36  
+    'Francophone Christian Social Party and Flemish Christian People&#8217;s Party'    0.0056668       3  
+    'Communist Party of Spain'                                                   0.0056051      13  
+    'Democratic Intervention'                                                    0.0055033      13  
+    'People's Party'                                                             0.0052936      10  
+    'Centre Democrats'                                                           0.0052826      39  
+    'Coalition of Bulgarian Socialist Party'                                     0.0052583      60  
+    'Aleksandar Vucic - The future in which we believe'                          0.0052325      70  
+    'Democratic Party'                                                           0.0051644      52  
+    'Lithuanian Peasants Party'                                                  0.0051374      50  
+    'Belgian Socialist Party'                                                    0.0051245       5  
+
+</pre><h2 id="29">Using the function fun_kryl.m compute the total comunicability of every node</h2><pre class="codeinput">addpath(<span class="string">'.\funm_kryl\'</span>)
+param.function = @expm;       <span class="comment">% other choices: 'expBA', 'expCF', ...</span>
+param.restart_length = 10;
+param.max_restarts = 50;
+param.hermitian = 0;          <span class="comment">% set 0 if A is not Hermitian</span>
+param.V_full = 0;             <span class="comment">% set 1 if you need Krylov basis</span>
+param.H_full = 1;             <span class="comment">% if using rational functions you can set this 0</span>
+param.exact = [];             <span class="comment">% if not known set to []</span>
+param.bound = 0;              <span class="comment">% returns upper and lower bounds (after some cycles)</span>
+param.stopping_accuracy = 1e-10;  <span class="comment">% stopping accuracy</span>
+param.inner_product = @inner_product;
+param.thick = [];             <span class="comment">% thick-restart function</span>
+param.min_decay = 0.95;       <span class="comment">% we desire linear error reduction of rate &lt; .95</span>
+param.waitbar = 1;            <span class="comment">% show waitbar</span>
+param.reorth_number = 0;      <span class="comment">% #reorthogonalizations</span>
+param = param_init(param);    <span class="comment">% check and correct param structure</span>
+
+[Tc,out1] = funm_kryl(A,ones(n,1),param);
+</pre><h2 id="30">%%%%%%%%%%%%%%%%%% show result total comunicability %%%%%%%%%%%%%%%%%%</h2><pre class="codeinput">[sper,peer]=sort(Tc,<span class="string">'descend'</span>);
+
+rescom = table;
+rescom.PartyName=full_name(peer,1);
+rescom.Communicability=sper;
+rescom.PageRank=pr(peer);
+rescom.Degree = sum(A,2);
+
+rescom(1:25,:)
+</pre><pre class="codeoutput">
+ans =
+
+  25&times;4 table
+
+                                    PartyName                                    Communicability    PageRank     Degree
+                                        x                                                                              
+    _________________________________________________________________________    _______________    _________    ______
+
+    'Human Shield'                                                                 6.2799e+36       0.0064549       2  
+    'Democratic Peasants&#8217; Party of Germany'                                        6.2727e+36       0.0071579      28  
+    'Latvian Farmers&#8217; Union'                                                       6.0237e+36       0.0064145      15  
+    'Geneva Citizens' Movement'                                                    5.9176e+36       0.0063279      65  
+    'Social Democratic Party'                                                      5.8828e+36       0.0072297       1  
+    'None-of-the-above'                                                            5.8163e+36       0.0059335       7  
+    'Communist Party of Spain'                                                     5.5811e+36       0.0056051      10  
+    'Portuguese Communist Party'                                                   5.5631e+36        0.005937       4  
+    'Francophone Christian Social Party and Flemish Christian People&#8217;s Party'      5.5433e+36       0.0056668      46  
+    'Radical Political Party'                                                      5.5395e+36       0.0057698      65  
+    'Popular Unity'                                                                5.4342e+36       0.0060599      27  
+    'Alliance of the Christian Democratic People's Front'                          5.3917e+36       0.0058324      80  
+    'Livable Netherlands'                                                          5.3775e+36       0.0050172       7  
+    'Homeland Union - Lithuanian Christian Democrats'                              5.3487e+36       0.0059093      42  
+    'Democratic Intervention'                                                      5.2979e+36       0.0055033      36  
+    'Socialist Workers&#8217; Party of Luxembourg'                                       5.2861e+36       0.0046844       3  
+    'Direction-Social Democracy'                                                   5.2777e+36       0.0058928      13  
+    'Alliance of Free Democrats'                                                    5.166e+36       0.0061446      13  
+    'People's Party'                                                               5.1241e+36       0.0052936      10  
+    'Democratic Party'                                                             5.0961e+36       0.0051644      39  
+    'Blue Coalition'                                                               5.0145e+36       0.0057555      60  
+    'The Left'                                                                      4.936e+36       0.0044422      70  
+    'Centre Democrats'                                                             4.8786e+36       0.0052826      52  
+    'Key Coalition'                                                                4.8747e+36       0.0056872      50  
+    'Popular Democratic Movement'                                                  4.8313e+36       0.0050177       5  
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+close all
+clear all
+clc
+
+% IMPORT & Polishing Data%
+G = csvread('Adj.csv',1,1);
+
+party_name = readtable("party_name.csv");
+party_name = party_name(:,2);
+
+ideas_name = readtable("Ideas_name.csv");
+ideas_name = ideas_name(:,2);
+
+full_name = vertcat(party_name,ideas_name);
+
+N = max(size(G));
+A = sparse(G);
+clear G;
+
+%% pre-processing
+
+Au = 1*(A+A'>0);                    % undirected network
+Au = Au - diag(diag(Au));           % clear diagonal (you never know)
+
+% Remove nodes which are NOT connected
+pos = find(sum(Au)~=0);
+A = A(pos,pos);
+Au = Au(pos,pos);
+full_name = full_name(pos,1);
+spy(Au);
+
+%% %%%%%%%%%%%%%%%%% EXTRACT THE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Distribution
+N = size(A,1);              % Number of Nodes
+ display("Number of Nodes= "+N)
+d = full(sum(A));           % Degree Vector
+%d = d(d>0);                % avoid zero degrees
+Links_num = sum(d);         % Total number of links REPLACE_WITH_DASH_DASHG (Let's decide if #node is this or we want to divide by 2)
+ display("Total number of links= "+Links_num)
+
+k = unique(d);              % Degree Samples
+pk = histc(d,k)';           % counts occurrences
+pk = pk/sum(pk);            % normalize to 1
+
+% Cumulative distribution
+Pk = cumsum(pk,'reverse');
+
+% Log Binning
+klog = 10.^(0:0.1:ceil(log10(max(k))));
+pklog = histc(d,klog)';     % counts occurrences
+pklog = pklog/sum(pklog);   % normalize to 1
+
+%% %%%%%%%%%%%%%%%%% MOMENTS OF DEGREE DISTRIBUTION %%%%%%%%%%%%%%%%%%%%
+
+Mean_D = mean(d);           % First Moment of prob. distribution
+display("First Moment of prob. distribution= "+Mean_D)
+
+Var_D = var(d);             % Second Moment of Prob. distribution (Express the spread)
+display("Second Moment of Prob. distribution= "+Var_D)
+
+Skew_D = skewness(d);       % Third Moment of Prob. distribution (How symmetric around average)
+display("Third Moment of Prob. distribution= "+Skew_D)
+
+%% %%%%%%%%%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%% 
+figure(2)
+subplot(2,2,1)
+plot(k,pk,'.')
+grid
+xlabel('k')
+ylabel('PDF')
+title('linear PDF plot')
+subplot(2,2,2)
+loglog(k,pk,'.')
+grid
+xlabel('k')
+ylabel('PDF')
+title('logarithmic PDF plot')
+subplot(2,2,3)
+loglog(klog,pklog,'.')
+grid
+xlabel('k')
+ylabel('PDF')
+title('logarithmic PDF plot (log bins)')
+subplot(2,2,4)
+loglog(k,Pk,'.')
+grid
+xlabel('k')
+ylabel('CCDF')
+title('logarithmic CCDF plot')
+
+%% %%%%%%%%%%%%%%%%% PURE ML FITTING %%%%%%%%%%%%%%%%%%%%%%%%%
+
+kmin = 40;
+d2 = d(d>=kmin);                 % restrict range
+ga = 1+1/mean(log(d2/kmin));     % estimate the exponent
+disp(['gamma ML = ' num2str(ga)])
+
+%% %%%%%%%%%%%%%%%%% ML FITTING WITH SATURATION %%%%%%%%%%%%%%%%%%
+d1=d(d>30);
+for ks = 1:max(k)
+    kmin = min(d1);
+    tmp = mean(log((d1+ks)/(kmin+ks)));
+    ga2(ks) = 1+1/tmp;
+    de(ks) = log(ga2(ks)-1)-log(kmin+ks)-ga2(ks)*tmp;
+end
+[~,ks] = max(de);
+disp(['k_sat ML sat = ' num2str(ks)])
+disp(['gamma ML sat = ' num2str(ga2(ks))])
+
+
+%% %%%%%%%%%%%%%%%%% SHOW THE RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
+
+figure(5)
+% data
+loglog(k,Pk,'.')
+hold on
+% ML fitting (we make sure that the plot follows the data)
+s1 = k.^(1-ga); % build the CCDF signal
+loglog(k,s1/s1(40)*Pk(40));
+% ML fitting with saturation
+s1 = ((k+ks)/(kmin+ks)).^(1-ga2(ks));
+loglog(k,s1*exp(-1.2))
+hold off
+axis([xlim min(Pk/2) 2])
+grid
+xlabel('k')
+ylabel('CCDF')
+title('ML fittings')
+legend('data','ML','ML with sat.')
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%% ASSORTATIVITY %%%%%%%%%%%%%%%%%%%%%%%%%
+
+k_tmp = (A*d')./d'; % the average degree of neighbours
+
+% extract averages for each value of k
+u = unique(d');
+for k = 1:length(u)
+    k_nn(k) = mean(k_tmp(d'==u(k))); 
+end
+
+% do the linear fitting
+p = polyfit(log(u'),log(k_nn),1);
+disp(['Assortativity factor =' num2str(p(1))])          %Assortativity factor
+
+
+%% %%%%%%%%%%%%%%%%% SHOW RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%
+
+figure(6)
+loglog(d,k_tmp,'g.');
+hold on
+loglog(u,exp(p(2)+log(u)*p(1)),'r-');
+loglog(u,k_nn,'k.');
+hold off
+grid
+xlabel('k')
+ylabel('k_{nn}')
+title('Assortativity of the Collaboration Network')
+
+
+%% %%%%%%%%%%%%%%% CLUSTRING COEFFICIENT 1 %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Clustring Coefficient: Measure density of links in the neighbourhood
+
+cn = diag(full((Au*triu(Au)*Au)));          % Number of triangles for each node
+Ei = zeros(size(d));
+Ei = cn(d>1).';                             % Number of edges between nodes of neighbourhood
+%E_Max = 0.5*d(d>1).*(d(d>1)-1);             % Maximum Number of Edges (Pairs)
+C1 = 2*Ei./d(d>1)./(d(d>1)-1);                              % Clustring Coefficient
+%C1 = C1(C1>0);
+Cave1 = sum(C1)/N;
+
+%% %%%%%%%%%%%%%% CLUSTRING COEFFICIENT 2 %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for i=1:length(Au)
+  str(i).child = find(Au(i,:)>0);
+end
+N = length(Au);
+deg = sum(Au(:,:));
+
+% find neighboring links
+
+for i=1:N
+    adjn = Au(str(i).child,str(i).child);
+    E(i) = sum(sum(adjn))/2;
+    if deg(i)==1 | deg(i)==0
+        C(i) = 0;
+    else
+        C(i) = 2*E(i)/deg(i)/(deg(i)-1);
+    end
+
+end
+%C = C(C>0);
+C = full(C);
+Cave2 = sum(C)/N;
+ disp(['Average Clustering Coefficient = ' num2str(Cave2)])
+
+%% CLUSTRING COEFFICIENT PROB. DISTRIBUTION
+s = unique(C);                              % Unique Occurrences
+%k = unique(d);
+Cpk = histc(C,s)';                          % counts occurrences
+Cpk = Cpk/sum(Cpk);                         % normalize to 1
+
+% Cumulative distribution
+CPk = cumsum(Cpk,'reverse');
+figure(7);
+plot(s,CPk,'+');
+xline(Cave2,'rREPLACE_WITH_DASH_DASH',{'Average Clustring Coefficient'});
+grid
+xlabel('Clustrring Coefficient')
+ylabel('CCDF')
+title('Clustring Coefficient CCDF')
+%% %%%%%%%%%%%%%%%%%%%%%%% ROBUSTNESS %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Robustness: if you knock out x% of nodes/edges, how many % survive ?
+
+%%% Inhomogeneity Ratio: 
+inhom_Ratio = mean(d.^2)./mean(d);                  
+disp(['The Inhomogeneity Ratio = ' num2str(inhom_Ratio)])
+
+%%% Robustness for Random Attack failure
+Au_update = Au;
+Rand_inhom_Ratio = mean(d.^2) ./ mean(d);                  
+
+for i = 1:N-1
+    j = ceil((N-i)*rand)+1;
+    Au_update(:,j) = [];
+    Au_update(j,:) = [];
+    d_update = full(sum(Au_update));
+    
+    mom2_k = mean(d_update.^2);
+    mom1_k = mean(d_update);
+    
+    Rand_inhom_Ratio_update = mom2_k ./mom1_k;
+    Rand_inhom_Ratio = [Rand_inhom_Ratio Rand_inhom_Ratio_update];
+end
+
+%%% Robustness for Attacks (Adversary which removes all hubs first)
+
+Au_update = Au;
+Attack_inhom_Ratio = mean(d.^2) ./ mean(d);                  
+
+for i = 1:N-1
+    [hub_degree,hub_index] = max(d_update);
+    j = hub_index;
+    Au_update(:,j) = [];
+    Au_update(j,:) = [];
+    d_update = full(sum(Au_update));
+    
+    mom2_k = mean(d_update.^2);
+    mom1_k = mean(d_update);
+    
+    Attack_inhom_Ratio_update = mom2_k ./mom1_k;
+    Attack_inhom_Ratio = [Attack_inhom_Ratio Attack_inhom_Ratio_update];
+end
+
+% Showing the results (with Molly-Reed criteria)
+
+figure(8);
+loglog(Rand_inhom_Ratio,'-.');
+hold on
+loglog(Attack_inhom_Ratio,'g-.');
+hline = refline([0 2]);
+hline.Color = 'r';
+hline.LineWidth = 1;
+hold off
+grid;
+legend('Random failure','Attacks','Molly-Reed criteria');
+xlabel('k');
+ylabel('<K^2> / <K> ');
+title('Robustness');
+
+
+%% %%%%%%%%%%%%%%%%% Community Detection %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+G = csvread('gauss_Adj.csv',1,1);
+N = max(size(G));
+B = sparse(G);
+clear G;
+
+Bu = 1*(B+B'>0);                    % undirected network
+Bu = Bu - diag(diag(Bu));           % clear diagonal (you never know)
+
+% remove nodes which are NOT connected
+pos = find(sum(Bu)~=0);
+B = B(pos,pos);
+Bu = Bu(pos,pos);
+N = size(Bu,1);
+
+% Laplacian Matrix generation
+d = full(sum(Bu));                   % degree vector
+D = sum(d);                          % degrees sum
+I = spdiags(ones(N,1),0,N,N);        % identity matrix
+Di = spdiags(1./sqrt(d'),0,N,N);     % diagonal degrees square-rooted
+L = I - Di*Bu*Di;                    % normalized Laplacian
+M = Bu*Di*Di;                        % normalized adjacancy matrix
+
+%% %%%%%%%%%%%%%%%%%%%%%%% spectral approach %%%%%%%%%%%%%%%%%%%%%% 
+
+% extract eigenvectors
+[V,DD] = eigs(L,6,'SA');
+Vv = Di*V;                          % normalize eigenvectors
+v1 = Vv(:,2)/norm(Vv(:,2));         % Fiedler's vector
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[v1s,pos] = sort(v1,'descend');
+Bu1 = Bu(pos,pos);
+% evaluate the conductance measure
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:end-1);
+% identify the minimum -> threshold
+[~,mpos] = min(conduct);
+threshold = mean(v1s(mpos:mpos+1));
+disp([' '])
+disp('spectral approach')
+disp(['   Minimum conductance: ' num2str(conduct(mpos))])
+disp(['   Cheeger''s upper bound: ' num2str(sqrt(2*DD(2,2)))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos))])
+disp(['   Assoc value: ' num2str(assoc(mpos))])
+disp(['   Community size #1: ' num2str(mpos)])
+disp(['   Community size #2: ' num2str(N-mpos)])
+disp([' '])
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%% Kmean Approach %%%%%%%%%%%%%%%%%%%%%%%%%%
+LRC = kmeans(V(:,1:3),3);
+disp([' '])
+disp('Kmean approach')
+disp("  Community size #1: "+sum(LRC == 1))
+disp("  Community size #2: "+sum(LRC == 2))
+disp("  Community size #3: "+sum(LRC == 3))
+silhouette(V(:,1:3),LRC)
+
+
+
+%% %%%%%%%%%%%%%% Sovrapposition clustering and manual communities
+comt = readtable("community_truth.csv");
+comt = table2array(comt(:,2));
+err=0;
+
+%suppose we assign 1 to left, 2 to center and 3 to right
+
+for i = 1:length(LRC)
+    if comt(i)~=LRC(i)
+        err=err+1;
+    end
+end
+
+disp("Sovrapposition cluster and manually computed communities=" + (1-err/length(LRC)))
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%% PageRank-nibble approach %%%%%%%%%%%%%%%%% 
+
+if mpos<N-mpos              % select seed node from the smaller group
+    i = pos(1);             % we select the more relevant from the perspective of the spectral approach
+else
+    i = pos(end);
+end
+q = zeros(N,1);
+q(i) = 1;                   % teleport vector
+c = 0.85;
+r = (I-c*M)\((1-c)*q);      % ranking vector
+ep = 1e-3;                  % precision
+
+% run PageRank-nibble
+u = zeros(N,1);             % starting point
+v = q;                      % starting point
+th = full(ep*d/D)';         % thresholds
+count = 0;                  % exit counter
+complexity = 0;             % complexity value (# of operations)
+ii = i;                     % starting index used for Push operation
+while (count<N)
+    if v(ii)>th(ii)         % push if above threshold
+        tmp = v(ii);
+        u(ii) = u(ii)+(1-c)*tmp;
+        v(ii) = 0;
+        v = v + c*M(:,ii)*tmp;    
+        complexity = complexity + d(ii); % update complexity
+        count = 0;          % reset the exit counter
+    else                    % go to next entry if below threshold
+        count = count + 1;  % increase the exit counter
+        ii = mod(ii,N)+1;   % update the index used for Push
+    end
+end
+
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[u1s,pos2] = sort(u,'descend');
+Nmax = find(u1s>0,1,'last'); % discard nodes with 0 values (never used in Push)
+Bu1 = Bu(pos2,pos2(1:Nmax));
+% evaluate the conductance measure
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:Nmax-1); 
+% identify the minimum -> threshold
+[~,mpos2] = min(conduct);
+threshold2 = mean(u1s(mpos2:mpos2+1));
+disp('PageRank-nibble approach')
+disp(['   complexity/D: ' num2str((complexity/D))])
+disp(['   epsilon: ' num2str(ep)])
+disp(['   prec: ' num2str(norm(r-u,1))])
+disp(['   Minimum conductance: ' num2str(conduct(mpos2))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos2))])
+disp(['   Assoc value: ' num2str(assoc(mpos2))])
+disp(['   Community size #1: ' num2str(mpos2)])
+disp(['   Community size #2: ' num2str(N-mpos2)])
+
+% show sweep choice
+figure(9)
+plot(conduct)
+grid
+ylabel('conductance')
+title('sweep choice')
+
+% show network with partition
+figure(10)
+plot(u,v1,'k.')
+hold on
+% plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')
+plot(threshold2*[1,1],ylim,'g-')
+plot(xlim,threshold*[1,1],'r-')
+hold off
+grid
+ylabel('Fiedler''s eigenvector value')
+xlabel('PageRank value')
+title('communities')
+
+
+%% Community identified by connected components in our disconnected graph
+
+G = graph(Au);
+[bins,binsizes] = conncomp(G);
+mask=(bins==1);
+figure(11);
+plot(G)
+part_A=Au(mask,mask);
+
+%% Clustering on biggest connected component%%
+
+N = size(part_A,1);
+d = full(sum(part_A)); % degree vector
+D = sum(d); % degrees sum
+I = spdiags(ones(N,1),0,N,N); % identity matrix
+Di = spdiags(1./sqrt(d'),0,N,N); % diagonal degrees square-rooted
+L = I - Di*part_A*Di; % normalized Laplacian
+M = part_A*Di*Di; % normalized adjacancy matrix
+
+%% spectral approach on part_A
+
+% extract eigenvectors
+[V,DD] = eigs(L,6,'SA');
+Vv = Di*V; % normalize eigenvectors
+v1 = Vv(:,2)/norm(Vv(:,2)); % Fiedler's vector
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[v1s,pos] = sort(v1,'descend');
+Au1 = part_A(pos,pos);
+% evaluate the conductance measure
+a = sum(triu(Au1));
+b = sum(tril(Au1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:end-1);
+% show the conductance measure
+figure(12)
+plot(conduct,'x-')
+grid
+title('conductance')
+% identify the minimum -> threshold
+[~,mpos] = min(conduct);
+threshold = mean(v1s(mpos:mpos+1));
+disp([' '])
+disp('spectral approach')
+disp(['   Minimum conductance: ' num2str(conduct(mpos))])
+disp(['   Cheeger''s upper bound: ' num2str(sqrt(2*DD(2,2)))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos))])
+disp(['   Assoc value: ' num2str(assoc(mpos))])
+disp(['   Community size #1: ' num2str(mpos)])
+disp(['   Community size #2: ' num2str(N-mpos)])
+disp([' '])
+
+% community identified by sign of v1
+
+disp('spectral approach')
+disp("based only on sign of Fiedler's vector")
+disp(['   Community size #1: ' num2str( sum(v1>0))])
+disp(['   Community size #2: ' num2str(sum(v1<0))])
+disp([' '])
+
+%% %%%%%%%%%%%%%%% PageRank-nibble approach for the biggest component %%%%
+
+if mpos<N-mpos  % select seed node from the smaller group
+    i = pos(1); % we select the more relevant from the perspective of the spectral approach
+else
+    i = pos(end);
+end
+q = zeros(N,1);
+q(i) = 1; % teleport vector
+c = 0.85;
+r = (I-c*M)\((1-c)*q); % ranking vector
+ep = 1e-3; % precision
+
+% run PageRank-nibble
+u = zeros(N,1); % starting point
+v = q; % starting point
+th = full(ep*d/D)'; % thresholds
+count = 0; % exit counter
+complexity = 0; % complexity value (# of operations)
+ii = i; % starting index used for Push operation
+while (count<N)
+    if v(ii)>th(ii) % push if above threshold
+        tmp = v(ii);
+        u(ii) = u(ii)+(1-c)*tmp;
+        v(ii) = 0;
+        v = v + c*M(:,ii)*tmp;    
+        complexity = complexity + d(ii); % update complexity
+        count = 0; % reset the exit counter
+    else % go to next entry if below threshold
+        count = count + 1; % increase the exit counter
+        ii = mod(ii,N)+1; % update the index used for Push
+    end
+end
+
+% sweep wrt the ordering identified by v1
+% reorder the adjacency matrix
+[u1s,pos2] = sort(u,'descend');
+Nmax = find(u1s>0,1,'last'); % discard nodes with 0 values (never used in Push)
+Bu1 = Bu(pos2,pos2(1:Nmax));
+% evaluate the conductance measure
+a = sum(triu(Bu1));
+b = sum(tril(Bu1));
+assoc = cumsum(a+b);
+assoc = min(assoc,D-assoc);
+cut = cumsum(b-a);
+conduct = cut./assoc;
+conduct = conduct(1:Nmax-1); 
+% identify the minimum -> threshold
+[~,mpos2] = min(conduct);
+threshold2 = mean(u1s(mpos2:mpos2+1));
+disp('PageRank-nibble approach')
+disp(['   complexity/D: ' num2str((complexity/D))])
+disp(['   epsilon: ' num2str(ep)])
+disp(['   prec: ' num2str(norm(r-u,1))])
+disp(['   Minimum conductance: ' num2str(conduct(mpos2))])
+disp(['   # of links: ' num2str(D/2)])
+disp(['   Cut value: ' num2str(cut(mpos2))])
+disp(['   Assoc value: ' num2str(assoc(mpos2))])
+disp(['   Community size #1: ' num2str(mpos2)])
+disp(['   Community size #2: ' num2str(N-mpos2)])
+
+% show sweep choice
+figure(13)
+plot(conduct)
+grid
+ylabel('conductance')
+title('sweep choice')
+
+% show network with partition
+figure(14)
+plot(u,v1,'k.')
+hold on
+% plot(u(pos2(1:mpos2)),v1(pos2(1:mpos2)),'go')
+plot(threshold2*[1,1],ylim,'g-')
+plot(xlim,threshold*[1,1],'r-')
+hold off
+grid
+ylabel('Fiedler''s eigenvector value')
+xlabel('PageRank value')
+title('communities')
+
+%% Page rank
+
+n=size(A,1);
+e=ones(n,1);
+oo=1./sum(A);
+oo(oo==Inf)=0;
+D=diag(oo);
+Ad=sparse(A*D);
+eAd=sparse(e'*Ad);
+check=1;
+iter=0;
+v=sparse((1/n).*ones(n,1));
+toll=1e-4;
+alpha=0.85;
+toll=0.0001;
+
+while check>toll
+    vold=v;
+    v=alpha*Ad*vold+1/n*(1-alpha*eAd*vold)*e ;
+    check=sum(abs(v-vold));
+    iter=iter+1;
+end
+
+pr=v;
+%% %%%%%%%%%%%%%%%%%%%% Show page rank results %%%%%%%%%%%%%%%%%%%%%%%
+
+[spr,per]=sort(pr,'descend');
+result = table;
+result.Parties_name=full_name(per,1);
+result.PageRank=spr;
+result.Degree = sum(A,2);
+
+result(1:25,:)
+
+%% Using the function fun_kryl.m compute the total comunicability of every node
+addpath('.\funm_kryl\')
+param.function = @expm;       % other choices: 'expBA', 'expCF', ...
+param.restart_length = 10;
+param.max_restarts = 50;
+param.hermitian = 0;          % set 0 if A is not Hermitian
+param.V_full = 0;             % set 1 if you need Krylov basis
+param.H_full = 1;             % if using rational functions you can set this 0
+param.exact = [];             % if not known set to []
+param.bound = 0;              % returns upper and lower bounds (after some cycles)
+param.stopping_accuracy = 1e-10;  % stopping accuracy
+param.inner_product = @inner_product;
+param.thick = [];             % thick-restart function  
+param.min_decay = 0.95;       % we desire linear error reduction of rate < .95 
+param.waitbar = 1;            % show waitbar 
+param.reorth_number = 0;      % #reorthogonalizations
+param = param_init(param);    % check and correct param structure
+
+[Tc,out1] = funm_kryl(A,ones(n,1),param);
+%% %%%%%%%%%%%%%%%%%% show result total comunicability %%%%%%%%%%%%%%%%%%
+
+[sper,peer]=sort(Tc,'descend');
+
+rescom = table;
+rescom.PartyName=full_name(peer,1);
+rescom.Communicability=sper;
+rescom.PageRank=pr(peer);
+rescom.Degree = sum(A,2);
+
+rescom(1:25,:)
+##### SOURCE END #####
+--></body></html>
